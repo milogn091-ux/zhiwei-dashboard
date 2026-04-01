@@ -210,6 +210,9 @@
       <div class="section-title">📋 任務進度</div>
       <div class="task-list" id="task-list"></div>
 
+      <div class="section-title">👀 Watchlists</div>
+      <div class="next-list" id="watchlist-list"></div>
+
       <div class="section-title">📊 Token 消耗紀錄</div>
       <div class="token-table" id="token-table"></div>
 
@@ -312,6 +315,16 @@
 
       document.getElementById('next-list').innerHTML = (team.next_actions || []).map(n => `
         <div class="next-card"><div class="next-desc">• ${n}</div></div>`).join('');
+
+      document.getElementById('watchlist-list').innerHTML = (d.watchlists || []).map(w => `
+        <div class="next-card">
+          <div class="task-title">${w.name}</div>
+          <div class="next-desc">${w.desc}</div>
+          <div class="task-footer">
+            <span class="tag ${w.status === 'active' ? 't-active' : 't-planned'}">${w.status}</span>
+            ${w.doc ? `<a class="doc-link" href="https://github.com/milogn091-ux/-0328/blob/main/${w.doc}" target="_blank">查看 watchlist</a>` : ''}
+          </div>
+        </div>`).join('');
 
       const order = ['in_progress', 'todo', 'active_cron', 'done'];
       const sorted = [...d.tasks].sort((a, b) => order.indexOf(a.status) - order.indexOf(b.status));
