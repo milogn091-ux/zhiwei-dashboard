@@ -2,44 +2,46 @@
   "meta": {
     "title": "知微工作 Dashboard",
     "owner": "Wilson",
-    "updated": "2026-04-01T16:05+08:00",
-    "total_tokens_used": 280000,
-    "total_sessions": 12,
+    "updated": "2026-04-01T22:27+08:00",
+    "total_tokens_used": 430000,
+    "total_sessions": 18,
     "note": "token 數為估算值，每次更新由知微手動或自動寫入"
   },
   "brain": {
     "model": "claude-sonnet-4-6",
-    "daily_pct_left": 15,
+    "daily_pct_left": 39,
     "daily_refill": "明日同時刻充值",
-    "daily_time_left": "3h 54m",
-    "weekly_pct_left": 45,
+    "daily_time_left": "2h 32m",
+    "weekly_pct_left": 37,
     "weekly_refill": "2026-04-08 同時刻充值",
-    "weekly_time_left": "2d 22h",
-    "context_pct": 24,
-    "context_used": "242k",
+    "weekly_time_left": "2d 16h",
+    "context_pct": 33,
+    "context_used": "327k",
     "context_limit": "1.0m",
     "note": "由知微在每次對話後手動更新"
   },
   "token_log": [
     { "date": "2026-03-30", "session": "skill 安裝與 AI daily briefing", "tokens": 35000 },
     { "date": "2026-03-31", "session": "fitness trend PPT 改版（daily radar）", "tokens": 95000 },
-    { "date": "2026-04-01", "session": "PPT 視覺精修 + multi-search-engine 安裝", "tokens": 80000 }
+    { "date": "2026-04-01 上午", "session": "PPT 視覺精修 + multi-search-engine 安裝 + dashboard 建立", "tokens": 120000 },
+    { "date": "2026-04-01 下午", "session": "PPT 圖片素材最終版 + 密碼保護 + 記憶同步討論", "tokens": 90000 },
+    { "date": "2026-04-01 晚上", "session": "dashboard 腦力值 widget + 記憶系統討論 + Qwen config 查詢", "tokens": 45000 }
   ],
   "tasks": [
     {
       "id": "task-001",
       "title": "Daily Fitness Trend Radar 改版",
-      "desc": "從 weekly 模板改成每日自動搜查版，採 Intenza 視覺風格，Windows 相容字體，含圖片素材與可點擊來源連結。",
+      "desc": "從 weekly 模板改成每日自動搜查版，採 Intenza 視覺風格，Windows 相容字體，含 Intenza 圖片素材與可點擊來源連結，6 頁結構。",
       "status": "done",
       "category": "automation",
-      "tokens": 95000,
+      "tokens": 120000,
       "date_done": "2026-04-01",
       "link": ""
     },
     {
       "id": "task-002",
       "title": "multi-search-engine skill 安裝",
-      "desc": "安裝 17 搜尋引擎整合 skill，免 API key，支援中國 / 國際 / WolframAlpha。",
+      "desc": "安裝 17 搜尋引擎整合 skill，免 API key，支援中國 / 國際 / WolframAlpha，dashboard 已更新。",
       "status": "done",
       "category": "skill",
       "tokens": 3000,
@@ -49,12 +51,12 @@
     {
       "id": "task-003",
       "title": "知微工作 Dashboard 建立",
-      "desc": "建立 GitHub Pages 托管的工作 dashboard，含任務進度 + token 統計，Telegram 可直接開啟。",
-      "status": "in_progress",
+      "desc": "GitHub Pages 托管，密碼保護（Sylvie），含任務進度 / token 統計 / 腦力值 widget，Telegram 可直接開啟。",
+      "status": "done",
       "category": "infra",
-      "tokens": 8000,
-      "date_done": null,
-      "link": ""
+      "tokens": 12000,
+      "date_done": "2026-04-01",
+      "link": "https://milogn091-ux.github.io/zhiwei-dashboard/"
     },
     {
       "id": "task-004",
@@ -69,7 +71,17 @@
     {
       "id": "task-005",
       "title": "Daily Backup 排程修復",
-      "desc": "zhiwei:daily-backup cron 上次 timeout，需確認腳本執行時間是否超過 900s 限制。",
+      "desc": "zhiwei:daily-backup cron 上次 timeout，且今日 push 失敗（遠端有未整合提交），需先 pull --rebase 再 push。",
+      "status": "todo",
+      "category": "infra",
+      "tokens": 0,
+      "date_done": null,
+      "link": ""
+    },
+    {
+      "id": "task-006",
+      "title": "OpenClaw config 無效修復",
+      "desc": "openclaw.json 有 unrecognized keys（mmr, temporalDecay），導致 openclaw status 無法正常執行，需修復。",
       "status": "todo",
       "category": "infra",
       "tokens": 0,
