@@ -2,9 +2,9 @@
   "meta": {
     "title": "知微工作 Dashboard",
     "owner": "Wilson",
-    "updated": "2026-04-01T22:38+08:00",
-    "total_tokens_used": 455000,
-    "total_sessions": 19,
+    "updated": "2026-04-01T23:15+08:00",
+    "total_tokens_used": 485000,
+    "total_sessions": 21,
     "note": "token 數為估算值，每次更新由知微手動或自動寫入"
   },
   "brain": {
@@ -20,13 +20,90 @@
     "context_limit": "1.0m",
     "note": "由知微在每次對話後手動更新"
   },
+  "agent_team": {
+    "summary": "知微作為總控，v1 先以研究 / 執行兩個 specialist 為落地主軸；策略與記憶角色已定義，待逐步上線。",
+    "agents": [
+      {
+        "id": "agent-sylvie",
+        "name": "知微 Sylvie",
+        "role": "Chief of Staff / Orchestrator",
+        "status": "active",
+        "last_action": "完成 agent team v1 架構、spec 與 routing rules 起草",
+        "doc": "docs/cases/generated/zhiwei-agent-team-v1.md"
+      },
+      {
+        "id": "agent-research",
+        "name": "Research Agent",
+        "role": "Research Analyst",
+        "status": "ready",
+        "last_action": "Research Agent spec v1 已建立，可開始接研究型任務",
+        "doc": "docs/cases/generated/zhiwei-research-agent-spec.md"
+      },
+      {
+        "id": "agent-builder",
+        "name": "Builder Agent",
+        "role": "Automation / Builder",
+        "status": "active",
+        "last_action": "以試點方式將 dashboard 升級為 Agent Team Dashboard v1",
+        "doc": "docs/cases/generated/zhiwei-builder-agent-spec.md"
+      },
+      {
+        "id": "agent-strategy",
+        "name": "Strategy Agent",
+        "role": "Product / Strategy Analyst",
+        "status": "planned",
+        "last_action": "角色已在 team v1 定義，待補 spec",
+        "doc": "docs/cases/generated/zhiwei-agent-team-v1.md"
+      },
+      {
+        "id": "agent-memory",
+        "name": "Memory Agent",
+        "role": "Memory / Knowledge Curator",
+        "status": "planned",
+        "last_action": "角色已在 team v1 定義，v1 暫由知微兼任",
+        "doc": "docs/cases/generated/zhiwei-agent-team-v1.md"
+      }
+    ],
+    "routing_rules_doc": "docs/cases/generated/zhiwei-agent-routing-rules.md",
+    "recent_handoffs": [
+      {
+        "task": "Daily Fitness Trend Radar 改版",
+        "owner": "知微 + Builder Agent",
+        "result": "done",
+        "memory": true
+      },
+      {
+        "task": "OpenClaw config 無效修復",
+        "owner": "Builder Agent",
+        "result": "done",
+        "memory": true
+      },
+      {
+        "task": "Backup push 異常處理",
+        "owner": "Builder Agent",
+        "result": "done",
+        "memory": true
+      },
+      {
+        "task": "Agent Team v1 設計",
+        "owner": "知微",
+        "result": "done",
+        "memory": true
+      }
+    ],
+    "next_actions": [
+      "補 Strategy Agent spec v1",
+      "挑一個真 research 類任務，正式用 Research Agent 模式試跑一次",
+      "把 agent team 狀態同步進 workspace dashboard 備份檔"
+    ]
+  },
   "token_log": [
     { "date": "2026-03-30", "session": "skill 安裝與 AI daily briefing", "tokens": 35000 },
     { "date": "2026-03-31", "session": "fitness trend PPT 改版（daily radar）", "tokens": 95000 },
     { "date": "2026-04-01 上午", "session": "PPT 視覺精修 + multi-search-engine 安裝 + dashboard 建立", "tokens": 120000 },
     { "date": "2026-04-01 下午", "session": "PPT 圖片素材最終版 + 密碼保護 + 記憶同步討論", "tokens": 90000 },
     { "date": "2026-04-01 晚上", "session": "dashboard 腦力值 widget + 記憶系統討論 + Qwen config 查詢", "tokens": 45000 },
-    { "date": "2026-04-01 深夜", "session": "未完成任務收尾：config 修復 + backup rebase + push 診斷", "tokens": 25000 }
+    { "date": "2026-04-01 深夜", "session": "未完成任務收尾 + agent team v1 文件與試點 dashboard 升級", "tokens": 55000 }
   ],
   "tasks": [
     {
@@ -72,11 +149,11 @@
     {
       "id": "task-005",
       "title": "Daily Backup 排程修復",
-      "desc": "遠端衝突已解（已 pull --rebase 並整合遠端新增的 voice-tests.zip 提交），目前剩 GitHub push 傳輸層錯誤需收尾：send-pack unexpected disconnect / HTTP 400。",
-      "status": "in_progress",
+      "desc": "fetch-first / rebase / sideband disconnect / HTTP 400 已收尾，最終成功推送到 GitHub。",
+      "status": "done",
       "category": "infra",
-      "tokens": 0,
-      "date_done": null,
+      "tokens": 4000,
+      "date_done": "2026-04-01",
       "link": ""
     },
     {
@@ -87,6 +164,26 @@
       "category": "infra",
       "tokens": 2000,
       "date_done": "2026-04-01",
+      "link": ""
+    },
+    {
+      "id": "task-007",
+      "title": "知微 Agent Team v1 設計",
+      "desc": "完成 team 架構草案、Research / Builder spec、routing rules，並將 dashboard 升級為 Agent Team Dashboard v1。",
+      "status": "done",
+      "category": "system_design",
+      "tokens": 18000,
+      "date_done": "2026-04-01",
+      "link": ""
+    },
+    {
+      "id": "task-008",
+      "title": "Research Agent 真任務試跑",
+      "desc": "挑一個真 research 類任務，用 agent team mode 正式跑第一個研究員試點。",
+      "status": "todo",
+      "category": "agent_team",
+      "tokens": 0,
+      "date_done": null,
       "link": ""
     }
   ]
