@@ -2,9 +2,9 @@
   "meta": {
     "title": "知微工作 Dashboard",
     "owner": "Wilson",
-    "updated": "2026-04-01T22:27+08:00",
-    "total_tokens_used": 430000,
-    "total_sessions": 18,
+    "updated": "2026-04-01T22:38+08:00",
+    "total_tokens_used": 455000,
+    "total_sessions": 19,
     "note": "token 數為估算值，每次更新由知微手動或自動寫入"
   },
   "brain": {
@@ -25,7 +25,8 @@
     { "date": "2026-03-31", "session": "fitness trend PPT 改版（daily radar）", "tokens": 95000 },
     { "date": "2026-04-01 上午", "session": "PPT 視覺精修 + multi-search-engine 安裝 + dashboard 建立", "tokens": 120000 },
     { "date": "2026-04-01 下午", "session": "PPT 圖片素材最終版 + 密碼保護 + 記憶同步討論", "tokens": 90000 },
-    { "date": "2026-04-01 晚上", "session": "dashboard 腦力值 widget + 記憶系統討論 + Qwen config 查詢", "tokens": 45000 }
+    { "date": "2026-04-01 晚上", "session": "dashboard 腦力值 widget + 記憶系統討論 + Qwen config 查詢", "tokens": 45000 },
+    { "date": "2026-04-01 深夜", "session": "未完成任務收尾：config 修復 + backup rebase + push 診斷", "tokens": 25000 }
   ],
   "tasks": [
     {
@@ -71,8 +72,8 @@
     {
       "id": "task-005",
       "title": "Daily Backup 排程修復",
-      "desc": "zhiwei:daily-backup cron 上次 timeout，且今日 push 失敗（遠端有未整合提交），需先 pull --rebase 再 push。",
-      "status": "todo",
+      "desc": "遠端衝突已解（已 pull --rebase 並整合遠端新增的 voice-tests.zip 提交），目前剩 GitHub push 傳輸層錯誤需收尾：send-pack unexpected disconnect / HTTP 400。",
+      "status": "in_progress",
       "category": "infra",
       "tokens": 0,
       "date_done": null,
@@ -81,11 +82,11 @@
     {
       "id": "task-006",
       "title": "OpenClaw config 無效修復",
-      "desc": "openclaw.json 有 unrecognized keys（mmr, temporalDecay），導致 openclaw status 無法正常執行，需修復。",
-      "status": "todo",
+      "desc": "已移除 openclaw.json 中不被目前版本接受的 query 欄位（mmr, temporalDecay），openclaw status --deep 已恢復正常。",
+      "status": "done",
       "category": "infra",
-      "tokens": 0,
-      "date_done": null,
+      "tokens": 2000,
+      "date_done": "2026-04-01",
       "link": ""
     }
   ]
