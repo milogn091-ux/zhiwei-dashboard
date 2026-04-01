@@ -5,6 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>知微工作 Dashboard</title>
   <style>
+    /* lock screen */
+    #lock {
+      position: fixed; inset: 0; z-index: 999;
+      background: radial-gradient(ellipse at top left, rgba(96,165,250,.12) 0%, transparent 40%),
+                  radial-gradient(ellipse at bottom right, rgba(167,139,250,.08) 0%, transparent 40%),
+                  #0a0f1a;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lock-box {
+      background: rgba(14,21,38,.95);
+      border: 1px solid rgba(148,163,184,.15);
+      border-radius: 22px;
+      padding: 36px 32px 28px;
+      text-align: center;
+      width: min(320px, 90vw);
+    }
+    .lock-box .icon { font-size: 36px; margin-bottom: 12px; }
+    .lock-box h2 { font-size: 20px; font-weight: 900; color: #e8f0ff; margin-bottom: 4px; }
+    .lock-box p { font-size: 12px; color: #8fa4c0; margin-bottom: 20px; }
+    .lock-input {
+      width: 100%; padding: 12px 14px; border-radius: 12px;
+      border: 1px solid rgba(148,163,184,.2);
+      background: rgba(255,255,255,.04); color: #e8f0ff;
+      font-size: 16px; font-family: inherit; outline: none;
+      margin-bottom: 12px; text-align: center; letter-spacing: .1em;
+    }
+    .lock-input:focus { border-color: rgba(96,165,250,.45); }
+    .lock-btn {
+      width: 100%; padding: 12px; border-radius: 12px;
+      border: 1px solid rgba(96,165,250,.3);
+      background: rgba(96,165,250,.15); color: #60a5fa;
+      font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit;
+    }
+    .lock-btn:hover { background: rgba(96,165,250,.25); }
+    .lock-err { color: #f87171; font-size: 12px; margin-top: 10px; min-height: 16px; }
     :root {
       --bg: #0a0f1a;
       --card: rgba(14, 21, 38, 0.92);
@@ -114,6 +149,18 @@
   </style>
 </head>
 <body>
+  <div id="lock">
+    <div class="lock-box">
+      <div class="icon">🌿</div>
+      <h2>知微 Dashboard</h2>
+      <p>請輸入密碼才能查看</p>
+      <input class="lock-input" id="pw" type="password" placeholder="password" autofocus
+        onkeydown="if(event.key==='Enter')unlock()" />
+      <button class="lock-btn" onclick="unlock()">進入</button>
+      <div class="lock-err" id="lock-err"></div>
+    </div>
+  </div>
+
   <div class="wrap">
     <div id="loading">⏳ 載入中…</div>
     <div id="app">
@@ -232,7 +279,33 @@
           </div>`).join('');
     }
 
-    load();
+    // password gate
+    const PW_HASH = '1aafc8c4a4a75b7e6b7a5bc4f6d0d7f0e3b9c6e2a5f8d1c3b6e9a2f5d8c1b4e7';
+    function hashStr(s) {
+      // simple non-crypto hash for lightweight protection
+      let h = 0;
+      for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
+      return Math.abs(h).toString(16).padStart(8, '0');
+    }
+    const SESSION_KEY = 'zw_unlocked';
+    function unlock() {
+      const val = document.getElementById('pw').value;
+      // store hashed answer check
+      const expected = hashStr('Sylvie');
+      if (hashStr(val) === expected || val === 'Sylvie') {
+        sessionStorage.setItem(SESSION_KEY, '1');
+        document.getElementById('lock').style.display = 'none';
+        load();
+      } else {
+        document.getElementById('lock-err').textContent = '密碼錯誤，請再試一次。';
+        document.getElementById('pw').value = '';
+        document.getElementById('pw').focus();
+      }
+    }
+    if (sessionStorage.getItem(SESSION_KEY) === '1') {
+      document.getElementById('lock').style.display = 'none';
+      load();
+    }
   </script>
 </body>
 </html>
