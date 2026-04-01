@@ -64,61 +64,60 @@
       min-height: 100vh;
       padding: 20px 16px 48px;
     }
-    .wrap { max-width: 920px; margin: 0 auto; }
+    .wrap { max-width: 980px; margin: 0 auto; }
     .header { margin-bottom: 28px; }
-    .header h1 { font-size: clamp(22px, 5vw, 32px); font-weight: 900; letter-spacing: -.03em; }
+    .header h1 { font-size: clamp(28px, 6vw, 40px); font-weight: 900; letter-spacing: -.03em; }
     .header h1 span { color: var(--blue); }
-    .header-meta { margin-top: 6px; color: var(--muted); font-size: 13px; }
-    .updated-tag { display: inline-block; background: rgba(96,165,250,.12); border: 1px solid rgba(96,165,250,.2); border-radius: 8px; padding: 2px 10px; font-size: 11px; color: var(--blue); margin-right: 8px; }
+    .header-meta { margin-top: 10px; color: var(--muted); font-size: 16px; line-height: 1.7; }
+    .updated-tag { display: inline-block; background: rgba(96,165,250,.12); border: 1px solid rgba(96,165,250,.2); border-radius: 10px; padding: 4px 12px; font-size: 14px; color: var(--blue); margin-right: 8px; }
     .brain-panel {
       background: var(--card);
-      border: 1px solid rgba(167,139,250,.2);
-      border-radius: var(--radius);
-      padding: 18px 20px 16px;
-      margin-bottom: 22px;
+      border: 1px solid rgba(167,139,250,.24);
+      border-radius: 22px;
+      padding: 22px 24px 20px;
+      margin-bottom: 26px;
     }
     .brain-title {
-      font-size: 11px; font-weight: 800; text-transform: uppercase;
-      letter-spacing: .1em; color: var(--purple); margin-bottom: 14px;
-      display: flex; align-items: center; gap: 6px;
+      font-size: 16px; font-weight: 900; letter-spacing: .02em; color: var(--purple); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
     }
     .brain-model-tag {
       display: inline-block;
       background: rgba(167,139,250,.12); border: 1px solid rgba(167,139,250,.22);
-      border-radius: 8px; padding: 2px 10px; font-size: 11px; font-weight: 700;
+      border-radius: 10px; padding: 4px 12px; font-size: 13px; font-weight: 700;
       color: var(--purple); margin-left: auto; letter-spacing: 0;
       text-transform: none;
     }
     .brain-rows { display: flex; flex-direction: column; gap: 12px; }
     .brain-row-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
-    .brain-row-label { font-size: 12px; font-weight: 700; color: var(--soft); }
-    .brain-row-right { font-size: 11px; color: var(--muted); text-align: right; }
+    .brain-row-label { font-size: 16px; font-weight: 800; color: var(--soft); }
+    .brain-row-right { font-size: 15px; color: var(--muted); text-align: right; }
     .brain-row-right strong { color: var(--text); font-weight: 800; }
-    .bar-bg { width: 100%; height: 8px; border-radius: 99px; background: rgba(255,255,255,.06); overflow: hidden; }
+    .bar-bg { width: 100%; height: 12px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; }
     .bar-fill { height: 100%; border-radius: 99px; transition: width .4s ease; }
     .bar-danger { background: linear-gradient(90deg, #f87171, #fbbf24); }
     .bar-warn { background: linear-gradient(90deg, #fbbf24, #a78bfa); }
     .bar-ok { background: linear-gradient(90deg, #60a5fa, #a78bfa); }
     .bar-ctx { background: linear-gradient(90deg, #2dd4bf, #60a5fa); }
-    .brain-refill { font-size: 10px; color: var(--muted); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+    .brain-refill { font-size: 13px; color: var(--muted); margin-top: 6px; display: flex; align-items: center; gap: 6px; }
     .brain-refill-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
     .brain-divider { height: 1px; background: var(--line); margin: 4px 0; }
-    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 28px; }
-    .stat-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
-    .stat-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; }
-    .stat-value { font-size: clamp(22px, 4vw, 30px); font-weight: 900; letter-spacing: -.02em; }
-    .stat-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 30px; }
+    .stat-card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 20px 22px; }
+    .stat-label { font-size: 14px; font-weight: 800; letter-spacing: .02em; color: var(--muted); margin-bottom: 8px; }
+    .stat-value { font-size: clamp(32px, 6vw, 44px); font-weight: 900; letter-spacing: -.02em; }
+    .stat-sub { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
     .c-green { color: var(--green); }
     .c-blue { color: var(--blue); }
     .c-amber { color: var(--amber); }
     .c-purple { color: var(--purple); }
-    .section-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: 24px 0 12px; }
+    .section-title { font-size: 22px; font-weight: 900; color: var(--text); margin: 30px 0 14px; }
     .task-list, .agent-list, .handoff-list, .next-list { display: flex; flex-direction: column; gap: 10px; }
     .task-card, .agent-card, .handoff-card, .next-card {
       background: var(--card);
       border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 14px 18px;
+      border-radius: 22px;
+      padding: 18px 20px;
     }
     .task-card { display: flex; align-items: flex-start; gap: 14px; transition: border-color .2s; }
     .task-card:hover, .agent-card:hover { border-color: rgba(148,163,184,.28); }
@@ -129,10 +128,10 @@
     .dot-todo, .dot-planned { background: var(--line); border: 1.5px solid var(--muted); }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
     .task-body, .agent-body { flex: 1; min-width: 0; }
-    .task-title, .agent-title { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
-    .task-desc, .agent-desc, .handoff-desc, .next-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+    .task-title, .agent-title { font-size: 20px; font-weight: 800; margin-bottom: 6px; line-height: 1.4; }
+    .task-desc, .agent-desc, .handoff-desc, .next-desc { font-size: 16px; color: var(--muted); line-height: 1.75; }
     .task-footer, .agent-footer, .handoff-footer { display: flex; align-items: center; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
-    .tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 6px; letter-spacing: .04em; }
+    .tag { font-size: 13px; font-weight: 800; padding: 4px 10px; border-radius: 8px; letter-spacing: .02em; }
     .t-done { background: rgba(74,222,128,.12); color: var(--green); border: 1px solid rgba(74,222,128,.2); }
     .t-in_progress, .t-active { background: rgba(96,165,250,.12); color: var(--blue); border: 1px solid rgba(96,165,250,.2); }
     .t-active_cron, .t-ready { background: rgba(45,212,191,.12); color: var(--teal); border: 1px solid rgba(45,212,191,.2); }
@@ -142,25 +141,25 @@
     .task-date { font-size: 10px; color: var(--muted); margin-left: auto; }
     .agent-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
     .agent-card { display: flex; align-items: flex-start; gap: 14px; }
-    .agent-role { font-size: 11px; color: var(--soft); font-weight: 700; }
+    .agent-role { font-size: 15px; color: var(--soft); font-weight: 700; margin-bottom: 4px; }
     .doc-link { color: var(--blue); text-decoration: none; }
     .doc-link:hover { text-decoration: underline; }
     .summary-card {
       background: var(--card);
       border: 1px solid rgba(96,165,250,.16);
-      border-radius: var(--radius);
-      padding: 16px 18px;
-      margin-bottom: 12px;
+      border-radius: 22px;
+      padding: 20px 22px;
+      margin-bottom: 14px;
     }
-    .summary-card p { font-size: 13px; color: var(--soft); line-height: 1.65; }
+    .summary-card p { font-size: 17px; color: var(--soft); line-height: 1.8; }
     .token-table { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
-    .token-row { display: grid; grid-template-columns: 100px 1fr 100px; padding: 10px 16px; border-bottom: 1px solid var(--line); font-size: 12px; align-items: center; gap: 8px; }
+    .token-row { display: grid; grid-template-columns: 120px 1fr 120px; padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 15px; align-items: center; gap: 10px; }
     .token-row:last-child { border-bottom: none; }
-    .token-row.head { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); background: rgba(255,255,255,.02); }
+    .token-row.head { font-size: 13px; font-weight: 800; letter-spacing: .04em; color: var(--muted); background: rgba(255,255,255,.02); }
     .token-num { color: var(--purple); font-family: monospace; font-weight: 700; text-align: right; }
     .refresh-btn {
       appearance: none; border: 1px solid rgba(96,165,250,.25); background: rgba(96,165,250,.1);
-      color: var(--blue); padding: 7px 18px; border-radius: 10px; font-size: 12px; font-weight: 700;
+      color: var(--blue); padding: 12px 22px; border-radius: 12px; font-size: 16px; font-weight: 800;
       cursor: pointer; margin-top: 32px; display: block; margin-left: auto;
     }
     .refresh-btn:hover { background: rgba(96,165,250,.18); }
@@ -197,23 +196,23 @@
       <div id="brain-panel"></div>
       <div class="stats" id="stats"></div>
 
-      <div class="section-title">🤝 Agent Team</div>
+      <div class="section-title">✅ 最近重要進展</div>
+      <div class="handoff-list" id="handoff-list"></div>
+
+      <div class="section-title">➡️ 下一步</div>
+      <div class="next-list" id="next-list"></div>
+
+      <div class="section-title">🤝 團隊狀態（展開看）</div>
       <div class="summary-card"><p id="agent-summary"></p></div>
       <div class="agent-grid" id="agent-list"></div>
 
-      <div class="section-title">🪢 Recent Handoffs</div>
-      <div class="handoff-list" id="handoff-list"></div>
-
-      <div class="section-title">➡️ Next Actions</div>
-      <div class="next-list" id="next-list"></div>
-
-      <div class="section-title">📋 任務進度</div>
-      <div class="task-list" id="task-list"></div>
-
-      <div class="section-title">👀 Watchlists</div>
+      <div class="section-title">👀 長期追蹤清單</div>
       <div class="next-list" id="watchlist-list"></div>
 
-      <div class="section-title">📊 Token 消耗紀錄</div>
+      <div class="section-title">📋 任務明細（展開看）</div>
+      <div class="task-list" id="task-list"></div>
+
+      <div class="section-title">📊 Token 紀錄（次要）</div>
       <div class="token-table" id="token-table"></div>
 
       <button class="refresh-btn" onclick="load()">↺ 重新載入</button>
@@ -283,10 +282,10 @@
       const todo = d.tasks.filter(t => t.status === 'todo').length;
       const total_tok = d.token_log.reduce((a, r) => a + r.tokens, 0);
       document.getElementById('stats').innerHTML = `
-        <div class="stat-card"><div class="stat-label">已完成</div><div class="stat-value c-green">${done}</div><div class="stat-sub">共 ${d.tasks.length} 項任務</div></div>
-        <div class="stat-card"><div class="stat-label">進行中</div><div class="stat-value c-blue">${inprog}</div><div class="stat-sub">含自動排程</div></div>
-        <div class="stat-card"><div class="stat-label">待辦</div><div class="stat-value c-amber">${todo}</div><div class="stat-sub">需推進</div></div>
-        <div class="stat-card"><div class="stat-label">Token 累計</div><div class="stat-value c-purple">${fmt(total_tok)}</div><div class="stat-sub">近 ${d.token_log.length} 次紀錄</div></div>`;
+        <div class="stat-card"><div class="stat-label">今天狀態</div><div class="stat-value c-green">${done}</div><div class="stat-sub">已完成 ${done} 項；總任務 ${d.tasks.length} 項</div></div>
+        <div class="stat-card"><div class="stat-label">目前推進中</div><div class="stat-value c-blue">${inprog}</div><div class="stat-sub">含自動排程與持續追蹤</div></div>
+        <div class="stat-card"><div class="stat-label">還待處理</div><div class="stat-value c-amber">${todo}</div><div class="stat-sub">真正還沒做的下一步</div></div>
+        <div class="stat-card"><div class="stat-label">累計 token</div><div class="stat-value c-purple">${fmt(total_tok)}</div><div class="stat-sub">供參考，不是最重要</div></div>`;
 
       const team = d.agent_team || {};
       document.getElementById('agent-summary').textContent = team.summary || '—';
