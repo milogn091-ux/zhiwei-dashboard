@@ -2,10 +2,23 @@
   "meta": {
     "title": "知微工作 Dashboard",
     "owner": "Wilson",
-    "updated": "2026-04-01",
+    "updated": "2026-04-01T16:05+08:00",
     "total_tokens_used": 280000,
     "total_sessions": 12,
     "note": "token 數為估算值，每次更新由知微手動或自動寫入"
+  },
+  "brain": {
+    "model": "claude-sonnet-4-6",
+    "daily_pct_left": 15,
+    "daily_refill": "明日同時刻充值",
+    "daily_time_left": "3h 54m",
+    "weekly_pct_left": 45,
+    "weekly_refill": "2026-04-08 同時刻充值",
+    "weekly_time_left": "2d 22h",
+    "context_pct": 24,
+    "context_used": "242k",
+    "context_limit": "1.0m",
+    "note": "由知微在每次對話後手動更新"
   },
   "token_log": [
     { "date": "2026-03-30", "session": "skill 安裝與 AI daily briefing", "tokens": 35000 },
