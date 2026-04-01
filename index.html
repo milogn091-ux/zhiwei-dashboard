@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>知微工作 Dashboard</title>
+  <style>
+    :root {
+      --bg: #0a0f1a;
+      --card: rgba(14, 21, 38, 0.92);
+      --line: rgba(148, 163, 184, 0.12);
+      --text: #e8f0ff;
+      --muted: #8fa4c0;
+      --soft: #c8d8f0;
+      --green: #4ade80;
+      --blue: #60a5fa;
+      --amber: #fbbf24;
+      --purple: #a78bfa;
+      --red: #f87171;
+      --teal: #2dd4bf;
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif;
+      background: radial-gradient(ellipse at top left, rgba(96,165,250,.12) 0%, transparent 40%),
+                  radial-gradient(ellipse at bottom right, rgba(167,139,250,.08) 0%, transparent 40%),
+                  var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px 16px 48px;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; }
+
+    /* header */
+    .header { margin-bottom: 28px; }
+    .header h1 { font-size: clamp(22px, 5vw, 32px); font-weight: 900; letter-spacing: -.03em; }
+    .header h1 span { color: var(--blue); }
+    .header-meta { margin-top: 6px; color: var(--muted); font-size: 13px; }
+    .updated-tag { display: inline-block; background: rgba(96,165,250,.12); border: 1px solid rgba(96,165,250,.2); border-radius: 8px; padding: 2px 10px; font-size: 11px; color: var(--blue); margin-right: 8px; }
+
+    /* stat row */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 28px; }
+    .stat-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
+    .stat-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; }
+    .stat-value { font-size: clamp(22px, 4vw, 30px); font-weight: 900; letter-spacing: -.02em; }
+    .stat-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+    .c-green { color: var(--green); }
+    .c-blue { color: var(--blue); }
+    .c-amber { color: var(--amber); }
+    .c-purple { color: var(--purple); }
+
+    /* section */
+    .section-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: 24px 0 12px; }
+
+    /* task list */
+    .task-list { display: flex; flex-direction: column; gap: 10px; }
+    .task-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      transition: border-color .2s;
+    }
+    .task-card:hover { border-color: rgba(148,163,184,.28); }
+    .task-dot {
+      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+    }
+    .dot-done { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .dot-in_progress { background: var(--blue); box-shadow: 0 0 6px var(--blue); animation: pulse 1.8s infinite; }
+    .dot-active_cron { background: var(--teal); box-shadow: 0 0 6px var(--teal); }
+    .dot-todo { background: var(--line); border: 1.5px solid var(--muted); }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .task-body { flex: 1; min-width: 0; }
+    .task-title { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+    .task-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+    .task-footer { display: flex; align-items: center; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+    .tag {
+      font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 6px; letter-spacing: .04em;
+    }
+    .t-done { background: rgba(74,222,128,.12); color: var(--green); border: 1px solid rgba(74,222,128,.2); }
+    .t-in_progress { background: rgba(96,165,250,.12); color: var(--blue); border: 1px solid rgba(96,165,250,.2); }
+    .t-active_cron { background: rgba(45,212,191,.12); color: var(--teal); border: 1px solid rgba(45,212,191,.2); }
+    .t-todo { background: rgba(148,163,184,.08); color: var(--muted); border: 1px solid rgba(148,163,184,.15); }
+    .t-token { background: rgba(167,139,250,.10); color: var(--purple); border: 1px solid rgba(167,139,250,.2); font-family: monospace; }
+    .t-cat { background: rgba(251,191,36,.08); color: var(--amber); border: 1px solid rgba(251,191,36,.18); }
+    .task-date { font-size: 10px; color: var(--muted); margin-left: auto; }
+
+    /* token log */
+    .token-table { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    .token-row { display: grid; grid-template-columns: 100px 1fr 100px; padding: 10px 16px; border-bottom: 1px solid var(--line); font-size: 12px; align-items: center; gap: 8px; }
+    .token-row:last-child { border-bottom: none; }
+    .token-row.head { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); background: rgba(255,255,255,.02); }
+    .token-num { color: var(--purple); font-family: monospace; font-weight: 700; text-align: right; }
+
+    /* refresh btn */
+    .refresh-btn {
+      appearance: none; border: 1px solid rgba(96,165,250,.25); background: rgba(96,165,250,.1);
+      color: var(--blue); padding: 7px 18px; border-radius: 10px; font-size: 12px; font-weight: 700;
+      cursor: pointer; margin-top: 32px; display: block; margin-left: auto;
+    }
+    .refresh-btn:hover { background: rgba(96,165,250,.18); }
+
+    /* loading */
+    #loading { text-align: center; padding: 48px 0; color: var(--muted); font-size: 14px; }
+    #app { display: none; }
+
+    @media (max-width: 600px) {
+      .token-row { grid-template-columns: 80px 1fr 80px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div id="loading">⏳ 載入中…</div>
+    <div id="app">
+      <div class="header">
+        <h1>知微<span> Dashboard</span></h1>
+        <div class="header-meta">
+          <span class="updated-tag" id="updated-tag">—</span>
+          <span id="meta-note"></span>
+        </div>
+      </div>
+
+      <div class="stats" id="stats"></div>
+
+      <div class="section-title">📋 任務進度</div>
+      <div class="task-list" id="task-list"></div>
+
+      <div class="section-title">📊 Token 消耗紀錄</div>
+      <div class="token-table" id="token-table"></div>
+
+      <button class="refresh-btn" onclick="load()">↺ 重新載入</button>
+    </div>
+  </div>
+
+  <script>
+    const STATUS_MAP = {
+      done: { label: '已完成', cls: 't-done', dot: 'dot-done' },
+      in_progress: { label: '進行中', cls: 't-in_progress', dot: 'dot-in_progress' },
+      active_cron: { label: '自動執行中', cls: 't-active_cron', dot: 'dot-active_cron' },
+      todo: { label: '待辦', cls: 't-todo', dot: 'dot-todo' },
+    };
+
+    function fmt(n) {
+      if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
+      return n.toString();
+    }
+
+    async function load() {
+      try {
+        const res = await fetch('./data.json?t=' + Date.now());
+        const d = await res.json();
+        render(d);
+      } catch (e) {
+        document.getElementById('loading').textContent = '❌ 載入失敗：' + e.message;
+      }
+    }
+
+    function render(d) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+
+      // header meta
+      document.getElementById('updated-tag').textContent = '更新：' + d.meta.updated;
+      document.getElementById('meta-note').textContent = d.meta.note || '';
+
+      // stats
+      const done = d.tasks.filter(t => t.status === 'done').length;
+      const inprog = d.tasks.filter(t => t.status === 'in_progress').length;
+      const todo = d.tasks.filter(t => t.status === 'todo').length;
+      const total_tok = d.token_log.reduce((a, r) => a + r.tokens, 0);
+
+      document.getElementById('stats').innerHTML = `
+        <div class="stat-card">
+          <div class="stat-label">已完成</div>
+          <div class="stat-value c-green">${done}</div>
+          <div class="stat-sub">共 ${d.tasks.length} 項任務</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">進行中</div>
+          <div class="stat-value c-blue">${inprog}</div>
+          <div class="stat-sub">含自動排程</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">待辦</div>
+          <div class="stat-value c-amber">${todo}</div>
+          <div class="stat-sub">需推進</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Token 累計</div>
+          <div class="stat-value c-purple">${fmt(total_tok)}</div>
+          <div class="stat-sub">近 ${d.token_log.length} 次紀錄</div>
+        </div>
+      `;
+
+      // tasks
+      const order = ['in_progress', 'todo', 'active_cron', 'done'];
+      const sorted = [...d.tasks].sort((a, b) => order.indexOf(a.status) - order.indexOf(b.status));
+      document.getElementById('task-list').innerHTML = sorted.map(t => {
+        const s = STATUS_MAP[t.status] || STATUS_MAP.todo;
+        const tokenTag = t.tokens ? `<span class="tag t-token">⚡ ${fmt(t.tokens)} tok</span>` : '';
+        const catTag = `<span class="tag t-cat">${t.category}</span>`;
+        const dateStr = t.date_done ? `<span class="task-date">${t.date_done}</span>` : '';
+        return `
+          <div class="task-card">
+            <div class="task-dot ${s.dot}"></div>
+            <div class="task-body">
+              <div class="task-title">${t.title}</div>
+              <div class="task-desc">${t.desc}</div>
+              <div class="task-footer">
+                <span class="tag ${s.cls}">${s.label}</span>
+                ${catTag}
+                ${tokenTag}
+                ${dateStr}
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+
+      // token log
+      document.getElementById('token-table').innerHTML =
+        `<div class="token-row head"><div>日期</div><div>作業</div><div class="token-num">Token</div></div>` +
+        d.token_log.map(r => `
+          <div class="token-row">
+            <div>${r.date}</div>
+            <div>${r.session}</div>
+            <div class="token-num">${fmt(r.tokens)}</div>
+          </div>`).join('');
+    }
+
+    load();
+  </script>
+</body>
+</html>
