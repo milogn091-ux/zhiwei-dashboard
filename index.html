@@ -5,54 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>知微工作 Dashboard</title>
   <style>
-    #lock {
-      position: fixed; inset: 0; z-index: 999;
-      background: radial-gradient(ellipse at top left, rgba(96,165,250,.12) 0%, transparent 40%),
-                  radial-gradient(ellipse at bottom right, rgba(167,139,250,.08) 0%, transparent 40%),
-                  #0a0f1a;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .lock-box {
-      background: rgba(14,21,38,.95);
-      border: 1px solid rgba(148,163,184,.15);
-      border-radius: 22px;
-      padding: 36px 32px 28px;
-      text-align: center;
-      width: min(320px, 90vw);
-    }
-    .lock-box .icon { font-size: 36px; margin-bottom: 12px; }
-    .lock-box h2 { font-size: 20px; font-weight: 900; color: #e8f0ff; margin-bottom: 4px; }
-    .lock-box p { font-size: 12px; color: #8fa4c0; margin-bottom: 20px; }
-    .lock-input {
-      width: 100%; padding: 12px 14px; border-radius: 12px;
-      border: 1px solid rgba(148,163,184,.2);
-      background: rgba(255,255,255,.04); color: #e8f0ff;
-      font-size: 16px; font-family: inherit; outline: none;
-      margin-bottom: 12px; text-align: center; letter-spacing: .1em;
-    }
-    .lock-input:focus { border-color: rgba(96,165,250,.45); }
-    .lock-btn {
-      width: 100%; padding: 12px; border-radius: 12px;
-      border: 1px solid rgba(96,165,250,.3);
-      background: rgba(96,165,250,.15); color: #60a5fa;
-      font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit;
-    }
-    .lock-btn:hover { background: rgba(96,165,250,.25); }
-    .lock-err { color: #f87171; font-size: 12px; margin-top: 10px; min-height: 16px; }
     :root {
       --bg: #0a0f1a;
-      --card: rgba(14, 21, 38, 0.92);
-      --line: rgba(148, 163, 184, 0.12);
-      --text: #e8f0ff;
-      --muted: #8fa4c0;
-      --soft: #c8d8f0;
+      --card: rgba(14, 21, 38, 0.96);
+      --line: rgba(148, 163, 184, 0.14);
+      --text: #eef4ff;
+      --muted: #9bb0ca;
+      --soft: #d9e6fb;
       --green: #4ade80;
       --blue: #60a5fa;
       --amber: #fbbf24;
       --purple: #a78bfa;
-      --red: #f87171;
       --teal: #2dd4bf;
-      --radius: 18px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -62,111 +26,124 @@
                   var(--bg);
       color: var(--text);
       min-height: 100vh;
-      padding: 20px 16px 48px;
+      padding: 18px 14px 40px;
     }
     .wrap { max-width: 980px; margin: 0 auto; }
-    .header { margin-bottom: 28px; }
-    .header h1 { font-size: clamp(28px, 6vw, 40px); font-weight: 900; letter-spacing: -.03em; }
-    .header h1 span { color: var(--blue); }
-    .header-meta { margin-top: 10px; color: var(--muted); font-size: 16px; line-height: 1.7; }
-    .updated-tag { display: inline-block; background: rgba(96,165,250,.12); border: 1px solid rgba(96,165,250,.2); border-radius: 10px; padding: 4px 12px; font-size: 14px; color: var(--blue); margin-right: 8px; }
-    .brain-panel {
-      background: var(--card);
-      border: 1px solid rgba(167,139,250,.24);
-      border-radius: 22px;
-      padding: 22px 24px 20px;
-      margin-bottom: 26px;
+
+    #lock {
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(8,12,22,.96);
+      display: flex; align-items: center; justify-content: center;
     }
+    .lock-box {
+      width: min(340px, 92vw);
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 34px 28px;
+      text-align: center;
+    }
+    .lock-box .icon { font-size: 42px; margin-bottom: 12px; }
+    .lock-box h2 { font-size: 26px; font-weight: 900; margin-bottom: 8px; }
+    .lock-box p { font-size: 16px; color: var(--muted); margin-bottom: 18px; line-height: 1.7; }
+    .lock-input {
+      width: 100%; padding: 14px 16px; border-radius: 14px; border: 1px solid rgba(148,163,184,.22);
+      background: rgba(255,255,255,.05); color: var(--text); font-size: 20px; text-align: center; margin-bottom: 12px;
+    }
+    .lock-btn {
+      width: 100%; padding: 14px; border-radius: 14px; border: 1px solid rgba(96,165,250,.3);
+      background: rgba(96,165,250,.16); color: var(--blue); font-size: 18px; font-weight: 900; cursor: pointer;
+    }
+    .lock-err { color: #f87171; font-size: 15px; min-height: 20px; margin-top: 10px; }
+
+    .header { margin-bottom: 20px; }
+    .header h1 { font-size: clamp(30px, 7vw, 44px); font-weight: 900; }
+    .header h1 span { color: var(--blue); }
+    .header-meta { margin-top: 10px; color: var(--muted); font-size: 16px; line-height: 1.8; }
+    .updated-tag {
+      display: inline-block; background: rgba(96,165,250,.12); border: 1px solid rgba(96,165,250,.2);
+      border-radius: 12px; padding: 5px 12px; font-size: 15px; color: var(--blue); margin-right: 8px;
+    }
+
+    .tabs {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px;
+    }
+    .tab-btn {
+      border: 1px solid var(--line); background: var(--card); color: var(--soft);
+      border-radius: 18px; padding: 16px 10px; font-size: 18px; font-weight: 900; cursor: pointer;
+    }
+    .tab-btn.active { background: rgba(96,165,250,.18); color: #ffffff; border-color: rgba(96,165,250,.35); }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 22px; margin-bottom: 16px;
+    }
+    .section-title { font-size: 24px; font-weight: 900; margin: 0 0 14px; }
+    .body-text { font-size: 18px; line-height: 1.9; color: var(--soft); }
+
     .brain-title {
-      font-size: 16px; font-weight: 900; letter-spacing: .02em; color: var(--purple); margin-bottom: 16px;
+      font-size: 20px; font-weight: 900; color: var(--purple); margin-bottom: 16px;
       display: flex; align-items: center; gap: 8px;
     }
     .brain-model-tag {
-      display: inline-block;
-      background: rgba(167,139,250,.12); border: 1px solid rgba(167,139,250,.22);
-      border-radius: 10px; padding: 4px 12px; font-size: 13px; font-weight: 700;
-      color: var(--purple); margin-left: auto; letter-spacing: 0;
-      text-transform: none;
+      margin-left: auto; background: rgba(167,139,250,.12); border: 1px solid rgba(167,139,250,.22);
+      border-radius: 12px; padding: 5px 12px; font-size: 14px; color: var(--purple);
     }
-    .brain-rows { display: flex; flex-direction: column; gap: 12px; }
-    .brain-row-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
-    .brain-row-label { font-size: 16px; font-weight: 800; color: var(--soft); }
-    .brain-row-right { font-size: 15px; color: var(--muted); text-align: right; }
-    .brain-row-right strong { color: var(--text); font-weight: 800; }
-    .bar-bg { width: 100%; height: 12px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; }
-    .bar-fill { height: 100%; border-radius: 99px; transition: width .4s ease; }
+    .brain-row { margin-bottom: 16px; }
+    .brain-row-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+    .brain-row-label { font-size: 18px; font-weight: 800; }
+    .brain-row-right { font-size: 16px; color: var(--muted); text-align: right; }
+    .bar-bg { width: 100%; height: 14px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 999px; }
     .bar-danger { background: linear-gradient(90deg, #f87171, #fbbf24); }
     .bar-warn { background: linear-gradient(90deg, #fbbf24, #a78bfa); }
     .bar-ok { background: linear-gradient(90deg, #60a5fa, #a78bfa); }
     .bar-ctx { background: linear-gradient(90deg, #2dd4bf, #60a5fa); }
-    .brain-refill { font-size: 13px; color: var(--muted); margin-top: 6px; display: flex; align-items: center; gap: 6px; }
-    .brain-refill-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
-    .brain-divider { height: 1px; background: var(--line); margin: 4px 0; }
-    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 30px; }
-    .stat-card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 20px 22px; }
-    .stat-label { font-size: 14px; font-weight: 800; letter-spacing: .02em; color: var(--muted); margin-bottom: 8px; }
-    .stat-value { font-size: clamp(32px, 6vw, 44px); font-weight: 900; letter-spacing: -.02em; }
-    .stat-sub { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+    .brain-refill { font-size: 15px; color: var(--muted); margin-top: 8px; }
+
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .stat-card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 22px; }
+    .stat-label { font-size: 18px; color: var(--muted); margin-bottom: 8px; font-weight: 800; }
+    .stat-value { font-size: clamp(34px, 8vw, 50px); font-weight: 900; }
+    .stat-sub { font-size: 17px; color: var(--muted); margin-top: 8px; line-height: 1.7; }
     .c-green { color: var(--green); }
     .c-blue { color: var(--blue); }
     .c-amber { color: var(--amber); }
     .c-purple { color: var(--purple); }
-    .section-title { font-size: 22px; font-weight: 900; color: var(--text); margin: 30px 0 14px; }
-    .task-list, .agent-list, .handoff-list, .next-list { display: flex; flex-direction: column; gap: 10px; }
-    .task-card, .agent-card, .handoff-card, .next-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 18px 20px;
+
+    .list { display: flex; flex-direction: column; gap: 14px; }
+    .item {
+      background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 20px;
     }
-    .task-card { display: flex; align-items: flex-start; gap: 14px; transition: border-color .2s; }
-    .task-card:hover, .agent-card:hover { border-color: rgba(148,163,184,.28); }
-    .task-dot, .agent-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
-    .dot-done { background: var(--green); box-shadow: 0 0 6px var(--green); }
-    .dot-in_progress, .dot-active { background: var(--blue); box-shadow: 0 0 6px var(--blue); animation: pulse 1.8s infinite; }
-    .dot-active_cron, .dot-ready { background: var(--teal); box-shadow: 0 0 6px var(--teal); }
-    .dot-todo, .dot-planned { background: var(--line); border: 1.5px solid var(--muted); }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-    .task-body, .agent-body { flex: 1; min-width: 0; }
-    .task-title, .agent-title { font-size: 20px; font-weight: 800; margin-bottom: 6px; line-height: 1.4; }
-    .task-desc, .agent-desc, .handoff-desc, .next-desc { font-size: 16px; color: var(--muted); line-height: 1.75; }
-    .task-footer, .agent-footer, .handoff-footer { display: flex; align-items: center; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
-    .tag { font-size: 13px; font-weight: 800; padding: 4px 10px; border-radius: 8px; letter-spacing: .02em; }
-    .t-done { background: rgba(74,222,128,.12); color: var(--green); border: 1px solid rgba(74,222,128,.2); }
-    .t-in_progress, .t-active { background: rgba(96,165,250,.12); color: var(--blue); border: 1px solid rgba(96,165,250,.2); }
-    .t-active_cron, .t-ready { background: rgba(45,212,191,.12); color: var(--teal); border: 1px solid rgba(45,212,191,.2); }
-    .t-todo, .t-planned { background: rgba(148,163,184,.08); color: var(--muted); border: 1px solid rgba(148,163,184,.15); }
-    .t-token { background: rgba(167,139,250,.10); color: var(--purple); border: 1px solid rgba(167,139,250,.2); font-family: monospace; }
-    .t-cat { background: rgba(251,191,36,.08); color: var(--amber); border: 1px solid rgba(251,191,36,.18); }
-    .task-date { font-size: 10px; color: var(--muted); margin-left: auto; }
-    .agent-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-    .agent-card { display: flex; align-items: flex-start; gap: 14px; }
-    .agent-role { font-size: 15px; color: var(--soft); font-weight: 700; margin-bottom: 4px; }
-    .doc-link { color: var(--blue); text-decoration: none; }
-    .doc-link:hover { text-decoration: underline; }
-    .summary-card {
-      background: var(--card);
-      border: 1px solid rgba(96,165,250,.16);
-      border-radius: 22px;
-      padding: 20px 22px;
-      margin-bottom: 14px;
+    .item-title { font-size: 22px; font-weight: 900; line-height: 1.5; margin-bottom: 8px; }
+    .item-desc { font-size: 17px; color: var(--muted); line-height: 1.8; }
+    .item-footer { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .tag {
+      display: inline-block; font-size: 14px; font-weight: 900; padding: 5px 10px; border-radius: 10px;
+      border: 1px solid transparent;
     }
-    .summary-card p { font-size: 17px; color: var(--soft); line-height: 1.8; }
-    .token-table { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
-    .token-row { display: grid; grid-template-columns: 120px 1fr 120px; padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 15px; align-items: center; gap: 10px; }
-    .token-row:last-child { border-bottom: none; }
-    .token-row.head { font-size: 13px; font-weight: 800; letter-spacing: .04em; color: var(--muted); background: rgba(255,255,255,.02); }
-    .token-num { color: var(--purple); font-family: monospace; font-weight: 700; text-align: right; }
+    .t-done { background: rgba(74,222,128,.12); color: var(--green); border-color: rgba(74,222,128,.2); }
+    .t-in_progress, .t-active { background: rgba(96,165,250,.12); color: var(--blue); border-color: rgba(96,165,250,.2); }
+    .t-active_cron, .t-ready { background: rgba(45,212,191,.12); color: var(--teal); border-color: rgba(45,212,191,.2); }
+    .t-todo, .t-planned { background: rgba(148,163,184,.08); color: var(--muted); border-color: rgba(148,163,184,.15); }
+    .t-cat { background: rgba(251,191,36,.08); color: var(--amber); border-color: rgba(251,191,36,.18); }
+    .t-token { background: rgba(167,139,250,.1); color: var(--purple); border-color: rgba(167,139,250,.2); }
+    .doc-link { color: var(--blue); font-size: 16px; text-decoration: none; font-weight: 800; }
+
     .refresh-btn {
-      appearance: none; border: 1px solid rgba(96,165,250,.25); background: rgba(96,165,250,.1);
-      color: var(--blue); padding: 12px 22px; border-radius: 12px; font-size: 16px; font-weight: 800;
-      cursor: pointer; margin-top: 32px; display: block; margin-left: auto;
+      appearance: none; border: 1px solid rgba(96,165,250,.25); background: rgba(96,165,250,.12);
+      color: var(--blue); padding: 14px 24px; border-radius: 14px; font-size: 18px; font-weight: 900; cursor: pointer;
+      display: block; margin: 26px auto 0;
     }
-    .refresh-btn:hover { background: rgba(96,165,250,.18); }
-    #loading { text-align: center; padding: 48px 0; color: var(--muted); font-size: 14px; }
+    #loading { text-align: center; padding: 50px 0; color: var(--muted); font-size: 18px; }
     #app { display: none; }
-    @media (max-width: 600px) {
-      .token-row { grid-template-columns: 80px 1fr 80px; }
+
+    @media (max-width: 700px) {
+      .tabs { grid-template-columns: repeat(2, 1fr); }
+      .brain-row-head { flex-direction: column; align-items: flex-start; }
+      .brain-row-right { text-align: left; }
     }
   </style>
 </head>
@@ -193,27 +170,51 @@
         </div>
       </div>
 
-      <div id="brain-panel"></div>
-      <div class="stats" id="stats"></div>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="showPage('home', this)">首頁</button>
+        <button class="tab-btn" onclick="showPage('tasks', this)">任務</button>
+        <button class="tab-btn" onclick="showPage('team', this)">團隊</button>
+        <button class="tab-btn" onclick="showPage('watch', this)">追蹤</button>
+      </div>
 
-      <div class="section-title">✅ 最近重要進展</div>
-      <div class="handoff-list" id="handoff-list"></div>
+      <div id="page-home" class="page active">
+        <div id="brain-panel"></div>
+        <div class="stats" id="stats"></div>
+        <div class="card">
+          <div class="section-title">最近重要進展</div>
+          <div class="list" id="handoff-list"></div>
+        </div>
+        <div class="card">
+          <div class="section-title">下一步</div>
+          <div class="list" id="next-list"></div>
+        </div>
+      </div>
 
-      <div class="section-title">➡️ 下一步</div>
-      <div class="next-list" id="next-list"></div>
+      <div id="page-tasks" class="page">
+        <div class="card">
+          <div class="section-title">任務</div>
+          <div class="list" id="task-list"></div>
+        </div>
+      </div>
 
-      <div class="section-title">🤝 團隊狀態（展開看）</div>
-      <div class="summary-card"><p id="agent-summary"></p></div>
-      <div class="agent-grid" id="agent-list"></div>
+      <div id="page-team" class="page">
+        <div class="card">
+          <div class="section-title">團隊說明</div>
+          <div class="body-text" id="agent-summary"></div>
+        </div>
+        <div class="list" id="agent-list"></div>
+      </div>
 
-      <div class="section-title">👀 長期追蹤清單</div>
-      <div class="next-list" id="watchlist-list"></div>
-
-      <div class="section-title">📋 任務明細（展開看）</div>
-      <div class="task-list" id="task-list"></div>
-
-      <div class="section-title">📊 Token 紀錄（次要）</div>
-      <div class="token-table" id="token-table"></div>
+      <div id="page-watch" class="page">
+        <div class="card">
+          <div class="section-title">長期追蹤清單</div>
+          <div class="list" id="watchlist-list"></div>
+        </div>
+        <div class="card">
+          <div class="section-title">Token 紀錄</div>
+          <div class="list" id="token-list"></div>
+        </div>
+      </div>
 
       <button class="refresh-btn" onclick="load()">↺ 重新載入</button>
     </div>
@@ -221,19 +222,22 @@
 
   <script>
     const STATUS_MAP = {
-      done: { label: '已完成', cls: 't-done', dot: 'dot-done' },
-      in_progress: { label: '進行中', cls: 't-in_progress', dot: 'dot-in_progress' },
-      active_cron: { label: '自動執行中', cls: 't-active_cron', dot: 'dot-active_cron' },
-      todo: { label: '待辦', cls: 't-todo', dot: 'dot-todo' },
+      done: { label: '已完成', cls: 't-done' },
+      in_progress: { label: '進行中', cls: 't-in_progress' },
+      active_cron: { label: '自動執行中', cls: 't-active_cron' },
+      todo: { label: '待辦', cls: 't-todo' },
     };
     const AGENT_STATUS_MAP = {
-      active: { label: 'active', cls: 't-active', dot: 'dot-active' },
-      ready: { label: 'ready', cls: 't-ready', dot: 'dot-ready' },
-      planned: { label: 'planned', cls: 't-planned', dot: 'dot-planned' }
+      active: { label: 'active', cls: 't-active' },
+      ready: { label: 'ready', cls: 't-ready' },
+      planned: { label: 'planned', cls: 't-planned' }
     };
-    function fmt(n) {
-      if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
-      return n.toString();
+    function fmt(n) { return n >= 1000 ? (n / 1000).toFixed(1) + 'k' : n.toString(); }
+    function showPage(name, btn) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + name).classList.add('active');
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
     }
     async function load() {
       try {
@@ -247,114 +251,98 @@
     function render(d) {
       document.getElementById('loading').style.display = 'none';
       document.getElementById('app').style.display = 'block';
-      const b = d.brain;
-      if (b) {
-        const dailyCls = b.daily_pct_left <= 20 ? 'bar-danger' : b.daily_pct_left <= 50 ? 'bar-warn' : 'bar-ok';
-        const weekCls  = b.weekly_pct_left <= 20 ? 'bar-danger' : b.weekly_pct_left <= 50 ? 'bar-warn' : 'bar-ok';
-        const ctxCls   = b.context_pct >= 80 ? 'bar-danger' : b.context_pct >= 50 ? 'bar-warn' : 'bar-ctx';
-        document.getElementById('brain-panel').innerHTML = `
-          <div class="brain-panel">
-            <div class="brain-title">🧠 知微腦力值 <span class="brain-model-tag">${b.model}</span></div>
-            <div class="brain-rows">
-              <div class="brain-row">
-                <div class="brain-row-head"><span class="brain-row-label">今日剩餘</span><span class="brain-row-right"><strong>${b.daily_pct_left}%</strong> &nbsp;剩 ${b.daily_time_left}</span></div>
-                <div class="bar-bg"><div class="bar-fill ${dailyCls}" style="width:${b.daily_pct_left}%"></div></div>
-                <div class="brain-refill"><span class="brain-refill-dot"></span>${b.daily_refill}</div>
-              </div>
-              <div class="brain-divider"></div>
-              <div class="brain-row">
-                <div class="brain-row-head"><span class="brain-row-label">本週剩餘</span><span class="brain-row-right"><strong>${b.weekly_pct_left}%</strong> &nbsp;剩 ${b.weekly_time_left}</span></div>
-                <div class="bar-bg"><div class="bar-fill ${weekCls}" style="width:${b.weekly_pct_left}%"></div></div>
-                <div class="brain-refill"><span class="brain-refill-dot" style="background:var(--blue)"></span>${b.weekly_refill}</div>
-              </div>
-              <div class="brain-divider"></div>
-              <div class="brain-row">
-                <div class="brain-row-head"><span class="brain-row-label">Context 使用</span><span class="brain-row-right"><strong>${b.context_pct}%</strong> &nbsp;${b.context_used} / ${b.context_limit}</span></div>
-                <div class="bar-bg"><div class="bar-fill ${ctxCls}" style="width:${b.context_pct}%"></div></div>
-              </div>
-            </div>
-          </div>`;
-      }
       document.getElementById('updated-tag').textContent = '更新：' + d.meta.updated;
       document.getElementById('meta-note').textContent = d.meta.note || '';
+
+      const b = d.brain;
+      const dailyCls = b.daily_pct_left <= 20 ? 'bar-danger' : b.daily_pct_left <= 50 ? 'bar-warn' : 'bar-ok';
+      const weekCls  = b.weekly_pct_left <= 20 ? 'bar-danger' : b.weekly_pct_left <= 50 ? 'bar-warn' : 'bar-ok';
+      const ctxCls   = b.context_pct >= 80 ? 'bar-danger' : b.context_pct >= 50 ? 'bar-warn' : 'bar-ctx';
+      document.getElementById('brain-panel').innerHTML = `
+        <div class="card">
+          <div class="brain-title">🧠 知微腦力值 <span class="brain-model-tag">${b.model}</span></div>
+          <div class="brain-row">
+            <div class="brain-row-head"><span class="brain-row-label">今日剩餘</span><span class="brain-row-right"><strong>${b.daily_pct_left}%</strong> · 剩 ${b.daily_time_left}</span></div>
+            <div class="bar-bg"><div class="bar-fill ${dailyCls}" style="width:${b.daily_pct_left}%"></div></div>
+            <div class="brain-refill">${b.daily_refill}</div>
+          </div>
+          <div class="brain-row">
+            <div class="brain-row-head"><span class="brain-row-label">本週剩餘</span><span class="brain-row-right"><strong>${b.weekly_pct_left}%</strong> · 剩 ${b.weekly_time_left}</span></div>
+            <div class="bar-bg"><div class="bar-fill ${weekCls}" style="width:${b.weekly_pct_left}%"></div></div>
+            <div class="brain-refill">${b.weekly_refill}</div>
+          </div>
+          <div class="brain-row">
+            <div class="brain-row-head"><span class="brain-row-label">Context 使用</span><span class="brain-row-right"><strong>${b.context_pct}%</strong> · ${b.context_used} / ${b.context_limit}</span></div>
+            <div class="bar-bg"><div class="bar-fill ${ctxCls}" style="width:${b.context_pct}%"></div></div>
+          </div>
+        </div>`;
+
       const done = d.tasks.filter(t => t.status === 'done').length;
       const inprog = d.tasks.filter(t => t.status === 'in_progress' || t.status === 'active_cron').length;
       const todo = d.tasks.filter(t => t.status === 'todo').length;
       const total_tok = d.token_log.reduce((a, r) => a + r.tokens, 0);
       document.getElementById('stats').innerHTML = `
-        <div class="stat-card"><div class="stat-label">今天狀態</div><div class="stat-value c-green">${done}</div><div class="stat-sub">已完成 ${done} 項；總任務 ${d.tasks.length} 項</div></div>
-        <div class="stat-card"><div class="stat-label">目前推進中</div><div class="stat-value c-blue">${inprog}</div><div class="stat-sub">含自動排程與持續追蹤</div></div>
-        <div class="stat-card"><div class="stat-label">還待處理</div><div class="stat-value c-amber">${todo}</div><div class="stat-sub">真正還沒做的下一步</div></div>
-        <div class="stat-card"><div class="stat-label">累計 token</div><div class="stat-value c-purple">${fmt(total_tok)}</div><div class="stat-sub">供參考，不是最重要</div></div>`;
+        <div class="stat-card"><div class="stat-label">今天狀態</div><div class="stat-value c-green">${done}</div><div class="stat-sub">已完成 ${done} 項</div></div>
+        <div class="stat-card"><div class="stat-label">目前推進中</div><div class="stat-value c-blue">${inprog}</div><div class="stat-sub">正在進行 / 自動執行</div></div>
+        <div class="stat-card"><div class="stat-label">還待處理</div><div class="stat-value c-amber">${todo}</div><div class="stat-sub">下一步待做</div></div>
+        <div class="stat-card"><div class="stat-label">累計 token</div><div class="stat-value c-purple">${fmt(total_tok)}</div><div class="stat-sub">僅供參考</div></div>`;
 
       const team = d.agent_team || {};
+      document.getElementById('handoff-list').innerHTML = (team.recent_handoffs || []).map(h => `
+        <div class="item">
+          <div class="item-title">${h.task}</div>
+          <div class="item-desc">由 ${h.owner} 接手，結果：${h.result}${h.memory ? '，已沉澱進記憶 / 文檔' : ''}</div>
+        </div>`).join('');
+      document.getElementById('next-list').innerHTML = (team.next_actions || []).map(n => `
+        <div class="item"><div class="item-desc">• ${n}</div></div>`).join('');
+
       document.getElementById('agent-summary').textContent = team.summary || '—';
       document.getElementById('agent-list').innerHTML = (team.agents || []).map(a => {
         const s = AGENT_STATUS_MAP[a.status] || AGENT_STATUS_MAP.planned;
         return `
-          <div class="agent-card">
-            <div class="agent-dot ${s.dot}"></div>
-            <div class="agent-body">
-              <div class="agent-title">${a.name}</div>
-              <div class="agent-role">${a.role}</div>
-              <div class="agent-desc">${a.last_action}</div>
-              <div class="agent-footer">
-                <span class="tag ${s.cls}">${s.label}</span>
-                ${a.doc ? `<a class="doc-link" href="https://github.com/milogn091-ux/-0328/blob/main/${a.doc}" target="_blank">查看 spec</a>` : ''}
-              </div>
+          <div class="item">
+            <div class="item-title">${a.name}</div>
+            <div class="item-desc">${a.role}</div>
+            <div class="item-desc">${a.last_action}</div>
+            <div class="item-footer">
+              <span class="tag ${s.cls}">${s.label}</span>
+              ${a.doc ? `<a class="doc-link" href="https://github.com/milogn091-ux/-0328/blob/main/${a.doc}" target="_blank">查看文件</a>` : ''}
             </div>
           </div>`;
       }).join('');
-
-      document.getElementById('handoff-list').innerHTML = (team.recent_handoffs || []).map(h => `
-        <div class="handoff-card">
-          <div class="task-title">${h.task}</div>
-          <div class="handoff-desc">由 <strong>${h.owner}</strong> 接手，結果：<strong>${h.result}</strong>${h.memory ? '，已沉澱進記憶 / 文檔' : ''}</div>
-        </div>`).join('');
-
-      document.getElementById('next-list').innerHTML = (team.next_actions || []).map(n => `
-        <div class="next-card"><div class="next-desc">• ${n}</div></div>`).join('');
-
-      document.getElementById('watchlist-list').innerHTML = (d.watchlists || []).map(w => `
-        <div class="next-card">
-          <div class="task-title">${w.name}</div>
-          <div class="next-desc">${w.desc}</div>
-          <div class="task-footer">
-            <span class="tag ${w.status === 'active' ? 't-active' : 't-planned'}">${w.status}</span>
-            ${w.doc ? `<a class="doc-link" href="https://github.com/milogn091-ux/-0328/blob/main/${w.doc}" target="_blank">查看 watchlist</a>` : ''}
-          </div>
-        </div>`).join('');
 
       const order = ['in_progress', 'todo', 'active_cron', 'done'];
       const sorted = [...d.tasks].sort((a, b) => order.indexOf(a.status) - order.indexOf(b.status));
       document.getElementById('task-list').innerHTML = sorted.map(t => {
         const s = STATUS_MAP[t.status] || STATUS_MAP.todo;
-        const tokenTag = t.tokens ? `<span class="tag t-token">⚡ ${fmt(t.tokens)} tok</span>` : '';
-        const catTag = `<span class="tag t-cat">${t.category}</span>`;
-        const dateStr = t.date_done ? `<span class="task-date">${t.date_done}</span>` : '';
         return `
-          <div class="task-card">
-            <div class="task-dot ${s.dot}"></div>
-            <div class="task-body">
-              <div class="task-title">${t.title}</div>
-              <div class="task-desc">${t.desc}</div>
-              <div class="task-footer">
-                <span class="tag ${s.cls}">${s.label}</span>
-                ${catTag}
-                ${tokenTag}
-                ${dateStr}
-              </div>
+          <div class="item">
+            <div class="item-title">${t.title}</div>
+            <div class="item-desc">${t.desc}</div>
+            <div class="item-footer">
+              <span class="tag ${s.cls}">${s.label}</span>
+              <span class="tag t-cat">${t.category}</span>
+              ${t.tokens ? `<span class="tag t-token">${fmt(t.tokens)} tok</span>` : ''}
             </div>
           </div>`;
       }).join('');
 
-      document.getElementById('token-table').innerHTML = `<div class="token-row head"><div>日期</div><div>作業</div><div class="token-num">Token</div></div>` +
-        d.token_log.map(r => `
-          <div class="token-row">
-            <div>${r.date}</div>
-            <div>${r.session}</div>
-            <div class="token-num">${fmt(r.tokens)}</div>
-          </div>`).join('');
+      document.getElementById('watchlist-list').innerHTML = (d.watchlists || []).map(w => `
+        <div class="item">
+          <div class="item-title">${w.name}</div>
+          <div class="item-desc">${w.desc}</div>
+          <div class="item-footer">
+            <span class="tag ${w.status === 'active' ? 't-active' : 't-planned'}">${w.status}</span>
+            ${w.doc ? `<a class="doc-link" href="https://github.com/milogn091-ux/-0328/blob/main/${w.doc}" target="_blank">查看清單</a>` : ''}
+          </div>
+        </div>`).join('');
+
+      document.getElementById('token-list').innerHTML = (d.token_log || []).map(r => `
+        <div class="item">
+          <div class="item-title">${r.date}</div>
+          <div class="item-desc">${r.session}</div>
+          <div class="item-footer"><span class="tag t-token">${fmt(r.tokens)} tok</span></div>
+        </div>`).join('');
     }
     function hashStr(s) {
       let h = 0;
