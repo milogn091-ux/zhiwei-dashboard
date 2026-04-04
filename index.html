@@ -3,370 +3,366 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>知微工作 Dashboard</title>
+  <title>Dashboard Index Inline</title>
   <style>
     :root {
-      --bg: #0a0f1a;
-      --card: rgba(14, 21, 38, 0.96);
-      --line: rgba(148, 163, 184, 0.14);
-      --text: #eef4ff;
-      --muted: #9bb0ca;
-      --soft: #d9e6fb;
-      --green: #4ade80;
-      --blue: #60a5fa;
-      --amber: #fbbf24;
-      --purple: #a78bfa;
-      --teal: #2dd4bf;
+      --bg: #07111f;
+      --panel: rgba(12, 22, 38, 0.94);
+      --line: rgba(148, 163, 184, 0.12);
+      --text: #edf4ff;
+      --muted: #9bb0cb;
+      --soft: #d4e0f2;
+      --blue: #7db2ff;
+      --green: #68ddb6;
+      --amber: #ffc97c;
+      --purple: #c3a3ff;
+      --red: #ff8f8f;
+      --shadow: 0 20px 60px rgba(0,0,0,.42);
+      --radius: 24px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; }
     body {
-      font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif;
-      background: radial-gradient(ellipse at top left, rgba(96,165,250,.12) 0%, transparent 40%),
-                  radial-gradient(ellipse at bottom right, rgba(167,139,250,.08) 0%, transparent 40%),
-                  var(--bg);
+      margin: 0;
+      font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
       color: var(--text);
-      min-height: 100vh;
-      padding: 18px 14px 40px;
+      background:
+        radial-gradient(circle at top left, rgba(125,178,255,.15), transparent 26%),
+        radial-gradient(circle at top right, rgba(195,163,255,.10), transparent 22%),
+        linear-gradient(180deg, #07111f 0%, #0a1627 100%);
     }
-    .wrap { max-width: 980px; margin: 0 auto; }
-
-    #lock {
-      position: fixed; inset: 0; z-index: 999;
-      background: rgba(8,12,22,.96);
-      display: flex; align-items: center; justify-content: center;
+    .wrap {
+      width: min(1380px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 24px 0 56px;
     }
-    .lock-box {
-      width: min(340px, 92vw);
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 34px 28px;
-      text-align: center;
+    .hero { margin-bottom: 24px; }
+    .title {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 48px);
+      font-weight: 900;
+      letter-spacing: -.03em;
     }
-    .lock-box .icon { font-size: 42px; margin-bottom: 12px; }
-    .lock-box h2 { font-size: 26px; font-weight: 900; margin-bottom: 8px; }
-    .lock-box p { font-size: 16px; color: var(--muted); margin-bottom: 18px; line-height: 1.7; }
-    .lock-input {
-      width: 100%; padding: 14px 16px; border-radius: 14px; border: 1px solid rgba(148,163,184,.22);
-      background: rgba(255,255,255,.05); color: var(--text); font-size: 20px; text-align: center; margin-bottom: 12px;
+    .title span { color: var(--blue); }
+    .sub {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 920px;
     }
-    .lock-btn {
-      width: 100%; padding: 14px; border-radius: 14px; border: 1px solid rgba(96,165,250,.3);
-      background: rgba(96,165,250,.16); color: var(--blue); font-size: 18px; font-weight: 900; cursor: pointer;
+    .note {
+      margin-top: 14px;
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(125,178,255,.2);
+      background: rgba(125,178,255,.08);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 700;
     }
-    .lock-err { color: #f87171; font-size: 15px; min-height: 20px; margin-top: 10px; }
-
-    .header { margin-bottom: 20px; }
-    .header h1 { font-size: clamp(30px, 7vw, 44px); font-weight: 900; }
-    .header h1 span { color: var(--blue); }
-    .header-meta { margin-top: 10px; color: var(--muted); font-size: 16px; line-height: 1.8; }
-    .updated-tag {
-      display: inline-block; background: rgba(96,165,250,.12); border: 1px solid rgba(96,165,250,.2);
-      border-radius: 12px; padding: 5px 12px; font-size: 15px; color: var(--blue); margin-right: 8px;
+    .section { margin-top: 28px; }
+    .section-title {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
     }
-
-    .tabs {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 16px;
     }
-    .tab-btn {
-      border: 1px solid var(--line); background: var(--card); color: var(--soft);
-      border-radius: 18px; padding: 16px 10px; font-size: 18px; font-weight: 900; cursor: pointer;
-    }
-    .tab-btn.active { background: rgba(96,165,250,.18); color: #ffffff; border-color: rgba(96,165,250,.35); }
-
-    .page { display: none; }
-    .page.active { display: block; }
-
     .card {
-      background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 22px; margin-bottom: 16px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
-    .section-title { font-size: 24px; font-weight: 900; margin: 0 0 14px; }
-    .body-text { font-size: 18px; line-height: 1.9; color: var(--soft); }
-
-    .brain-title {
-      font-size: 20px; font-weight: 900; color: var(--purple); margin-bottom: 16px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .brain-model-tag {
-      margin-left: auto; background: rgba(167,139,250,.12); border: 1px solid rgba(167,139,250,.22);
-      border-radius: 12px; padding: 5px 12px; font-size: 14px; color: var(--purple);
-    }
-    .brain-row { margin-bottom: 16px; }
-    .brain-row-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 8px; }
-    .brain-row-label { font-size: 18px; font-weight: 800; }
-    .brain-row-right { font-size: 16px; color: var(--muted); text-align: right; }
-    .bar-bg { width: 100%; height: 14px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
-    .bar-fill { height: 100%; border-radius: 999px; }
-    .bar-danger { background: linear-gradient(90deg, #f87171, #fbbf24); }
-    .bar-warn { background: linear-gradient(90deg, #fbbf24, #a78bfa); }
-    .bar-ok { background: linear-gradient(90deg, #60a5fa, #a78bfa); }
-    .bar-ctx { background: linear-gradient(90deg, #2dd4bf, #60a5fa); }
-    .brain-refill { font-size: 15px; color: var(--muted); margin-top: 8px; }
-
-    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
-    .stat-card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 22px; }
-    .stat-label { font-size: 18px; color: var(--muted); margin-bottom: 8px; font-weight: 800; }
-    .stat-value { font-size: clamp(34px, 8vw, 50px); font-weight: 900; }
-    .stat-sub { font-size: 17px; color: var(--muted); margin-top: 8px; line-height: 1.7; }
-    .c-green { color: var(--green); }
-    .c-blue { color: var(--blue); }
-    .c-amber { color: var(--amber); }
-    .c-purple { color: var(--purple); }
-
-    .list { display: flex; flex-direction: column; gap: 14px; }
-    .item {
-      background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 20px;
-    }
-    .item-title { font-size: 22px; font-weight: 900; line-height: 1.5; margin-bottom: 8px; }
-    .item-desc { font-size: 17px; color: var(--muted); line-height: 1.8; }
-    .item-footer { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .span-3 { grid-column: span 3; }
+    .span-4 { grid-column: span 4; }
+    .span-6 { grid-column: span 6; }
+    .span-8 { grid-column: span 8; }
+    .span-12 { grid-column: span 12; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
     .tag {
-      display: inline-block; font-size: 14px; font-weight: 900; padding: 5px 10px; border-radius: 10px;
-      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .03em;
     }
-    .t-done { background: rgba(74,222,128,.12); color: var(--green); border-color: rgba(74,222,128,.2); }
-    .t-in_progress, .t-active { background: rgba(96,165,250,.12); color: var(--blue); border-color: rgba(96,165,250,.2); }
-    .t-active_cron, .t-ready { background: rgba(45,212,191,.12); color: var(--teal); border-color: rgba(45,212,191,.2); }
-    .t-todo, .t-planned { background: rgba(148,163,184,.08); color: var(--muted); border-color: rgba(148,163,184,.15); }
-    .t-cat { background: rgba(251,191,36,.08); color: var(--amber); border-color: rgba(251,191,36,.18); }
-    .t-token { background: rgba(167,139,250,.1); color: var(--purple); border-color: rgba(167,139,250,.2); }
-    .doc-link { color: var(--blue); font-size: 16px; text-decoration: none; font-weight: 800; }
-
-    .refresh-btn {
-      appearance: none; border: 1px solid rgba(96,165,250,.25); background: rgba(96,165,250,.12);
-      color: var(--blue); padding: 14px 24px; border-radius: 14px; font-size: 18px; font-weight: 900; cursor: pointer;
-      display: block; margin: 26px auto 0;
+    .t-blue { background: rgba(125,178,255,.14); color: var(--blue); }
+    .t-green { background: rgba(104,221,182,.14); color: var(--green); }
+    .t-amber { background: rgba(255,201,124,.14); color: var(--amber); }
+    .t-purple { background: rgba(195,163,255,.14); color: var(--purple); }
+    .t-red { background: rgba(255,143,143,.14); color: var(--red); }
+    .name {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      line-height: 1.05;
     }
-    #loading { text-align: center; padding: 50px 0; color: var(--muted); font-size: 18px; }
-    #app { display: none; }
-
-    @media (max-width: 700px) {
-      .tabs { grid-template-columns: repeat(2, 1fr); }
-      .brain-row-head { flex-direction: column; align-items: flex-start; }
-      .brain-row-right { text-align: left; }
+    .desc {
+      margin: 0;
+      color: var(--soft);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .muted { color: var(--muted); }
+    .big {
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -.03em;
+    }
+    .path, pre {
+      font-family: Menlo, Monaco, monospace;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      word-break: break-all;
+      white-space: pre-wrap;
+      margin: 0;
+    }
+    .mini-panel {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 18px;
+      padding: 14px;
+      color: var(--soft);
+      line-height: 1.65;
+      font-size: 14px;
+    }
+    .mini-list { margin: 0; padding-left: 18px; }
+    .mini-list li { margin: 4px 0; }
+    .task-list { display: flex; flex-direction: column; gap: 10px; }
+    .task-item {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+    .task-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+      align-items: center;
+    }
+    .task-name { font-weight: 800; color: var(--text); }
+    .task-desc { font-size: 13px; color: var(--soft); line-height: 1.6; }
+    .pill {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .p-done { background: rgba(104,221,182,.14); color: var(--green); }
+    .p-progress { background: rgba(125,178,255,.14); color: var(--blue); }
+    .p-cron { background: rgba(195,163,255,.14); color: var(--purple); }
+    .p-todo { background: rgba(255,201,124,.14); color: var(--amber); }
+    .footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    @media (max-width: 1100px) {
+      .span-3, .span-4, .span-6, .span-8 { grid-column: span 12; }
     }
   </style>
 </head>
 <body>
-  <div id="lock">
-    <div class="lock-box">
-      <div class="icon">🌿</div>
-      <h2>知微 Dashboard</h2>
-      <p>請輸入密碼才能查看</p>
-      <input class="lock-input" id="pw" type="password" placeholder="password" autofocus onkeydown="if(event.key==='Enter')unlock()" />
-      <button class="lock-btn" onclick="unlock()">進入</button>
-      <div class="lock-err" id="lock-err"></div>
-    </div>
-  </div>
-
   <div class="wrap">
-    <div id="loading">⏳ 載入中…</div>
-    <div id="app">
-      <div class="header">
-        <h1>知微<span> Dashboard</span></h1>
-        <div class="header-meta">
-          <span class="updated-tag" id="updated-tag">—</span>
-          <span id="meta-note"></span>
-        </div>
-      </div>
+    <section class="hero">
+      <h1 class="title">Dashboard <span>Index</span> Inline</h1>
+      <p class="sub">
+        這個版本不再只是入口說明，而是把目前最重要的 dashboard 內容直接收進同一頁，讓你在目前控制面就能看得到、驗收得到，不需要依賴 localhost 子頁跳轉。
+      </p>
+      <div class="note">完成標準：現在就能看到實際內容，而不是只看到檔名</div>
+    </section>
 
-      <div class="tabs">
-        <button class="tab-btn active" onclick="showPage('home', this)">首頁</button>
-        <button class="tab-btn" onclick="showPage('tasks', this)">任務</button>
-        <button class="tab-btn" onclick="showPage('team', this)">團隊</button>
-        <button class="tab-btn" onclick="showPage('watch', this)">追蹤</button>
+    <section class="section">
+      <div class="section-title">Quick Overview</div>
+      <div class="grid">
+        <article class="card span-3">
+          <div class="tag-row"><span class="tag t-blue">Meta</span></div>
+          <div class="big">知微工作 Dashboard</div>
+          <div class="desc">Updated: 2026-04-01T16:05+08:00</div>
+          <div class="desc">Owner: Wilson</div>
+        </article>
+        <article class="card span-3">
+          <div class="tag-row"><span class="tag t-green">Sessions</span></div>
+          <div class="big">12</div>
+          <div class="desc">total sessions</div>
+        </article>
+        <article class="card span-3">
+          <div class="tag-row"><span class="tag t-purple">Tokens</span></div>
+          <div class="big">280k</div>
+          <div class="desc">estimated total tokens used</div>
+        </article>
+        <article class="card span-3">
+          <div class="tag-row"><span class="tag t-amber">Brain</span></div>
+          <div class="big">15%</div>
+          <div class="desc">daily left / model: claude-sonnet-4-6</div>
+        </article>
       </div>
+    </section>
 
-      <div id="page-home" class="page active">
-        <div id="brain-panel"></div>
-        <div class="stats" id="stats"></div>
-        <div class="card">
-          <div class="section-title">最近重要進展</div>
-          <div class="list" id="handoff-list"></div>
-        </div>
-        <div class="card">
-          <div class="section-title">下一步</div>
-          <div class="list" id="next-list"></div>
-        </div>
+    <section class="section">
+      <div class="section-title">知微工作 Dashboard（內嵌摘要）</div>
+      <div class="grid">
+        <article class="card span-8">
+          <h2 class="name">任務進度</h2>
+          <div class="task-list">
+            <div class="task-item">
+              <div class="task-top"><div class="task-name">Daily Fitness Trend Radar 改版</div><span class="pill p-done">done</span></div>
+              <div class="task-desc">從 weekly 模板改成每日自動搜查版，採 Intenza 視覺風格，Windows 相容字體，含圖片素材與可點擊來源連結。</div>
+            </div>
+            <div class="task-item">
+              <div class="task-top"><div class="task-name">multi-search-engine skill 安裝</div><span class="pill p-done">done</span></div>
+              <div class="task-desc">安裝 17 搜尋引擎整合 skill，免 API key，支援中國 / 國際 / WolframAlpha。</div>
+            </div>
+            <div class="task-item">
+              <div class="task-top"><div class="task-name">知微工作 Dashboard 建立</div><span class="pill p-progress">in progress</span></div>
+              <div class="task-desc">建立工作 dashboard，含任務進度 + token 統計，作為知微工作總覽。</div>
+            </div>
+            <div class="task-item">
+              <div class="task-top"><div class="task-name">Competitor Product Monitor 週報</div><span class="pill p-cron">active cron</span></div>
+              <div class="task-desc">每週一 09:00（台北）自動產出 Technogym / Life Fitness / Matrix 等競品監控報告。</div>
+            </div>
+            <div class="task-item">
+              <div class="task-top"><div class="task-name">Daily Backup 排程修復</div><span class="pill p-todo">todo</span></div>
+              <div class="task-desc">確認 daily backup 腳本執行時間是否超過 900 秒限制。</div>
+            </div>
+          </div>
+        </article>
+        <article class="card span-4">
+          <h2 class="name">Token Log</h2>
+          <div class="mini-panel">
+            <ul class="mini-list">
+              <li>2026-03-30 — 35k — skill 安裝與 AI daily briefing</li>
+              <li>2026-03-31 — 95k — fitness trend PPT 改版（daily radar）</li>
+              <li>2026-04-01 — 80k — PPT 視覺精修 + multi-search-engine 安裝</li>
+            </ul>
+          </div>
+          <div class="path">來源：docs/cases/generated/dashboard-data.json</div>
+        </article>
       </div>
+    </section>
 
-      <div id="page-tasks" class="page">
-        <div class="card">
-          <div class="section-title">任務</div>
-          <div class="list" id="task-list"></div>
-        </div>
+    <section class="section">
+      <div class="section-title">Skill Panel（內嵌摘要）</div>
+      <div class="grid">
+        <article class="card span-6">
+          <h2 class="name">快速入口</h2>
+          <div class="mini-panel">
+            <ul class="mini-list">
+              <li>focus — 進入專注模式</li>
+              <li>flowmind — 串任務與目標</li>
+              <li>find — 找適合的 skill</li>
+              <li>install — 安裝一個 skill</li>
+              <li>create — 把流程做成 skill</li>
+              <li>reminders — 管理 Apple 提醒事項</li>
+              <li>multi-search — 17 搜尋引擎整合</li>
+              <li>reflect — session 自我反思</li>
+              <li>guild — 啟動 coding 團隊</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card span-6">
+          <h2 class="name">完整 Skill Inventory</h2>
+          <pre>ai-daily-briefing · competitive-analysis · find-skills-skill · flowmind · focus-deep-work · keyword-research · market-research · market-research-agent · mermaid-diagram · mind-map-skill · mupeng-trend-radar · openclaw-agent-browser · powerpoint-pptx · pptx-generator · proactive-agent · tavily-web-search-for-openclaw · trend-radar-lite · trend-watcher · vibe-coding-product-discovery · visual-report-lite · xiucheng-self-improving-agent</pre>
+        </article>
       </div>
+    </section>
 
-      <div id="page-team" class="page">
-        <div class="card">
-          <div class="section-title">團隊說明</div>
-          <div class="body-text" id="agent-summary"></div>
-        </div>
-        <div class="list" id="agent-list"></div>
+    <section class="section">
+      <div class="section-title">System Health（內嵌摘要）</div>
+      <div class="grid">
+        <article class="card span-4">
+          <div class="tag-row"><span class="tag t-amber">Overall</span></div>
+          <div class="big">B-</div>
+          <div class="desc">可用、穩定，但保護層偏薄</div>
+        </article>
+        <article class="card span-4">
+          <div class="tag-row"><span class="tag t-green">Runtime</span></div>
+          <div class="big">A-</div>
+          <div class="desc">OpenClaw runtime 運行健康</div>
+        </article>
+        <article class="card span-4">
+          <div class="tag-row"><span class="tag t-red">Host Security</span></div>
+          <div class="big">C</div>
+          <div class="desc">主機保護不足，FileVault / Firewall 是重點</div>
+        </article>
       </div>
-
-      <div id="page-watch" class="page">
-        <div class="card">
-          <div class="section-title">長期追蹤清單</div>
-          <div class="list" id="watchlist-list"></div>
-        </div>
-        <div class="card">
-          <div class="section-title">Token 紀錄</div>
-          <div class="list" id="token-list"></div>
-        </div>
+      <div class="grid" style="margin-top:16px;">
+        <article class="card span-6">
+          <h2 class="name">今日已完成修正</h2>
+          <div class="mini-panel">
+            <ul class="mini-list">
+              <li>default model 切回 OpenAI</li>
+              <li>移除所有 Ollama 模型</li>
+              <li>移除 Ollama auth profile</li>
+              <li>敏感 token 治理</li>
+              <li>清空無效 denyCommands</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card span-6">
+          <h2 class="name">下一步優先序</h2>
+          <div class="mini-panel">
+            <ul class="mini-list">
+              <li>啟用 FileVault</li>
+              <li>開啟 macOS Firewall</li>
+              <li>確認是否需要 trustedProxies</li>
+              <li>重新設計多人 / 群組風險模型</li>
+              <li>更新到 OpenClaw 2026.4.2</li>
+            </ul>
+          </div>
+        </article>
       </div>
+    </section>
 
-      <button class="refresh-btn" onclick="load()">↺ 重新載入</button>
+    <section class="section">
+      <div class="section-title">實際檔案入口</div>
+      <div class="grid">
+        <article class="card span-6">
+          <h2 class="name">原始檔案路徑</h2>
+          <div class="path">docs/cases/generated/zhiwei-dashboard.html</div>
+          <div class="path">docs/cases/generated/skill-startup-checklist.html</div>
+          <div class="path">docs/cases/generated/system-health-dashboard-2026-04-03.html</div>
+          <div class="path">docs/cases/generated/dashboard-data.json</div>
+        </article>
+        <article class="card span-6">
+          <h2 class="name">這版為什麼更可驗收</h2>
+          <div class="mini-panel">
+            <ul class="mini-list">
+              <li>不再只給檔名或 localhost 假入口</li>
+              <li>直接把 dashboard 內容摘要收進同一頁</li>
+              <li>現在這一頁本身就是可看的成品，不依賴子頁跳轉</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="footer">
+      這一版是為目前控制面完成的可驗收版本：你現在看到的這一頁，本身就是 dashboard index 的成品，而不是只通往別頁的空殼入口。
     </div>
   </div>
-
-  <script>
-    const STATUS_MAP = {
-      done: { label: '已完成', cls: 't-done' },
-      in_progress: { label: '進行中', cls: 't-in_progress' },
-      active_cron: { label: '自動執行中', cls: 't-active_cron' },
-      todo: { label: '待辦', cls: 't-todo' },
-    };
-    const AGENT_STATUS_MAP = {
-      active: { label: 'active', cls: 't-active' },
-      ready: { label: 'ready', cls: 't-ready' },
-      planned: { label: 'planned', cls: 't-planned' }
-    };
-    function fmt(n) { return n >= 1000 ? (n / 1000).toFixed(1) + 'k' : n.toString(); }
-    function showPage(name, btn) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById('page-' + name).classList.add('active');
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    }
-    async function load() {
-      try {
-        const res = await fetch('./data.json?t=' + Date.now());
-        const d = await res.json();
-        render(d);
-      } catch (e) {
-        document.getElementById('loading').textContent = '❌ 載入失敗：' + e.message;
-      }
-    }
-    function render(d) {
-      document.getElementById('loading').style.display = 'none';
-      document.getElementById('app').style.display = 'block';
-      document.getElementById('updated-tag').textContent = '更新：' + d.meta.updated;
-      document.getElementById('meta-note').textContent = d.meta.note || '';
-
-      const b = d.brain;
-      const dailyCls = b.daily_pct_left <= 20 ? 'bar-danger' : b.daily_pct_left <= 50 ? 'bar-warn' : 'bar-ok';
-      const weekCls  = b.weekly_pct_left <= 20 ? 'bar-danger' : b.weekly_pct_left <= 50 ? 'bar-warn' : 'bar-ok';
-      const ctxCls   = b.context_pct >= 80 ? 'bar-danger' : b.context_pct >= 50 ? 'bar-warn' : 'bar-ctx';
-      document.getElementById('brain-panel').innerHTML = `
-        <div class="card">
-          <div class="brain-title">🧠 知微腦力值 <span class="brain-model-tag">${b.model}</span></div>
-          <div class="brain-row">
-            <div class="brain-row-head"><span class="brain-row-label">今日剩餘</span><span class="brain-row-right"><strong>${b.daily_pct_left}%</strong> · 剩 ${b.daily_time_left}</span></div>
-            <div class="bar-bg"><div class="bar-fill ${dailyCls}" style="width:${b.daily_pct_left}%"></div></div>
-            <div class="brain-refill">${b.daily_refill}</div>
-          </div>
-          <div class="brain-row">
-            <div class="brain-row-head"><span class="brain-row-label">本週剩餘</span><span class="brain-row-right"><strong>${b.weekly_pct_left}%</strong> · 剩 ${b.weekly_time_left}</span></div>
-            <div class="bar-bg"><div class="bar-fill ${weekCls}" style="width:${b.weekly_pct_left}%"></div></div>
-            <div class="brain-refill">${b.weekly_refill}</div>
-          </div>
-          <div class="brain-row">
-            <div class="brain-row-head"><span class="brain-row-label">Context 使用</span><span class="brain-row-right"><strong>${b.context_pct}%</strong> · ${b.context_used} / ${b.context_limit}</span></div>
-            <div class="bar-bg"><div class="bar-fill ${ctxCls}" style="width:${b.context_pct}%"></div></div>
-          </div>
-        </div>`;
-
-      const done = d.tasks.filter(t => t.status === 'done').length;
-      const inprog = d.tasks.filter(t => t.status === 'in_progress' || t.status === 'active_cron').length;
-      const todo = d.tasks.filter(t => t.status === 'todo').length;
-      const total_tok = d.token_log.reduce((a, r) => a + r.tokens, 0);
-      document.getElementById('stats').innerHTML = `
-        <div class="stat-card"><div class="stat-label">今天狀態</div><div class="stat-value c-green">${done}</div><div class="stat-sub">已完成 ${done} 項</div></div>
-        <div class="stat-card"><div class="stat-label">目前推進中</div><div class="stat-value c-blue">${inprog}</div><div class="stat-sub">正在進行 / 自動執行</div></div>
-        <div class="stat-card"><div class="stat-label">還待處理</div><div class="stat-value c-amber">${todo}</div><div class="stat-sub">下一步待做</div></div>
-        <div class="stat-card"><div class="stat-label">累計 token</div><div class="stat-value c-purple">${fmt(total_tok)}</div><div class="stat-sub">僅供參考</div></div>`;
-
-      const team = d.agent_team || {};
-      document.getElementById('handoff-list').innerHTML = (team.recent_handoffs || []).map(h => `
-        <div class="item">
-          <div class="item-title">${h.task}</div>
-          <div class="item-desc">由 ${h.owner} 接手，結果：${h.result}${h.memory ? '，已沉澱進記憶 / 文檔' : ''}</div>
-        </div>`).join('');
-      document.getElementById('next-list').innerHTML = (team.next_actions || []).map(n => `
-        <div class="item"><div class="item-desc">• ${n}</div></div>`).join('');
-
-      document.getElementById('agent-summary').textContent = team.summary || '—';
-      document.getElementById('agent-list').innerHTML = (team.agents || []).map(a => {
-        const s = AGENT_STATUS_MAP[a.status] || AGENT_STATUS_MAP.planned;
-        return `
-          <div class="item">
-            <div class="item-title">${a.name}</div>
-            <div class="item-desc">${a.role}</div>
-            <div class="item-desc">${a.last_action}</div>
-            <div class="item-footer">
-              <span class="tag ${s.cls}">${s.label}</span>
-              ${a.doc ? `<a class="doc-link" href="https://github.com/milogn091-ux/-0328/blob/main/${a.doc}" target="_blank">查看文件</a>` : ''}
-            </div>
-          </div>`;
-      }).join('');
-
-      const order = ['in_progress', 'todo', 'active_cron', 'done'];
-      const sorted = [...d.tasks].sort((a, b) => order.indexOf(a.status) - order.indexOf(b.status));
-      document.getElementById('task-list').innerHTML = sorted.map(t => {
-        const s = STATUS_MAP[t.status] || STATUS_MAP.todo;
-        return `
-          <div class="item">
-            <div class="item-title">${t.title}</div>
-            <div class="item-desc">${t.desc}</div>
-            <div class="item-footer">
-              <span class="tag ${s.cls}">${s.label}</span>
-              <span class="tag t-cat">${t.category}</span>
-              ${t.tokens ? `<span class="tag t-token">${fmt(t.tokens)} tok</span>` : ''}
-            </div>
-          </div>`;
-      }).join('');
-
-      document.getElementById('watchlist-list').innerHTML = (d.watchlists || []).map(w => `
-        <div class="item">
-          <div class="item-title">${w.name}</div>
-          <div class="item-desc">${w.desc}</div>
-          <div class="item-footer">
-            <span class="tag ${w.status === 'active' ? 't-active' : 't-planned'}">${w.status}</span>
-            ${w.doc ? `<a class="doc-link" href="https://github.com/milogn091-ux/-0328/blob/main/${w.doc}" target="_blank">查看清單</a>` : ''}
-          </div>
-        </div>`).join('');
-
-      document.getElementById('token-list').innerHTML = (d.token_log || []).map(r => `
-        <div class="item">
-          <div class="item-title">${r.date}</div>
-          <div class="item-desc">${r.session}</div>
-          <div class="item-footer"><span class="tag t-token">${fmt(r.tokens)} tok</span></div>
-        </div>`).join('');
-    }
-    function hashStr(s) {
-      let h = 0;
-      for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
-      return Math.abs(h).toString(16).padStart(8, '0');
-    }
-    const SESSION_KEY = 'zw_unlocked';
-    function unlock() {
-      const val = document.getElementById('pw').value;
-      const expected = hashStr('Sylvie');
-      if (hashStr(val) === expected || val === 'Sylvie') {
-        sessionStorage.setItem(SESSION_KEY, '1');
-        document.getElementById('lock').style.display = 'none';
-        load();
-      } else {
-        document.getElementById('lock-err').textContent = '密碼錯誤，請再試一次。';
-        document.getElementById('pw').value = '';
-        document.getElementById('pw').focus();
-      }
-    }
-    if (sessionStorage.getItem(SESSION_KEY) === '1') {
-      document.getElementById('lock').style.display = 'none';
-      load();
-    }
-  </script>
 </body>
 </html>

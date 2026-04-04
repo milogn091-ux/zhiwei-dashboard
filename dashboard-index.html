@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard Index</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(12, 22, 38, 0.9);
+      --line: rgba(148, 163, 184, 0.12);
+      --text: #edf4ff;
+      --muted: #9bb0cb;
+      --soft: #d4e0f2;
+      --blue: #7db2ff;
+      --green: #68ddb6;
+      --amber: #ffc97c;
+      --purple: #c3a3ff;
+      --shadow: 0 20px 60px rgba(0,0,0,.42);
+      --radius: 24px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(125,178,255,.15), transparent 26%),
+        radial-gradient(circle at top right, rgba(195,163,255,.10), transparent 22%),
+        linear-gradient(180deg, #07111f 0%, #0a1627 100%);
+    }
+    .wrap {
+      width: min(1280px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 24px 0 48px;
+    }
+    .hero {
+      margin-bottom: 22px;
+    }
+    .title {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 48px);
+      font-weight: 900;
+      letter-spacing: -.03em;
+    }
+    .title span { color: var(--blue); }
+    .sub {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 820px;
+    }
+    .note {
+      margin-top: 14px;
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(125,178,255,.2);
+      background: rgba(125,178,255,.08);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 100%;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .03em;
+    }
+    .t-blue { background: rgba(125,178,255,.14); color: var(--blue); }
+    .t-green { background: rgba(104,221,182,.14); color: var(--green); }
+    .t-amber { background: rgba(255,201,124,.14); color: var(--amber); }
+    .t-purple { background: rgba(195,163,255,.14); color: var(--purple); }
+    .name {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      line-height: 1.05;
+    }
+    .desc {
+      margin: 0;
+      color: var(--soft);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+    .path {
+      margin-top: auto;
+      font-family: Menlo, Monaco, monospace;
+      font-size: 12px;
+      color: var(--muted);
+      word-break: break-all;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      appearance: none;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      padding: 11px 14px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn.primary {
+      background: rgba(125,178,255,.16);
+      border-color: rgba(125,178,255,.26);
+      color: #eef5ff;
+    }
+    .btn:hover { opacity: .92; }
+    .copy-status {
+      min-height: 18px;
+      color: var(--green);
+      font-size: 12px;
+      text-align: left;
+    }
+    .footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1 class="title">Dashboard <span>Index</span></h1>
+      <p class="sub">
+        把目前已建立、可直接打開使用的 dashboard / HTML 入口收成一頁。之後不需要再靠記憶猜檔名，直接從這裡進。
+      </p>
+      <div class="note">主原則：入口集中，不再分散</div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="tag-row">
+          <span class="tag t-blue">主入口</span>
+          <span class="tag t-green">Dashboard</span>
+        </div>
+        <h2 class="name">知微工作 Dashboard</h2>
+        <p class="desc">
+          比較偏知微工作總覽：任務、token、工作狀態。這是目前最像總覽面板的一頁。
+        </p>
+        <div class="actions">
+          <button class="btn primary" data-copy-text="docs/cases/generated/zhiwei-dashboard.html">複製路徑</button>
+        </div>
+        <div class="path">docs/cases/generated/zhiwei-dashboard.html</div>
+      </article>
+
+      <article class="card">
+        <div class="tag-row">
+          <span class="tag t-purple">Skills</span>
+          <span class="tag t-blue">Panel</span>
+        </div>
+        <h2 class="name">Skill Startup Checklist</h2>
+        <p class="desc">
+          skill 啟動清單 / prompt 面板。適合快速找到已裝 skill、複製 prompt、當成技能入口頁。
+        </p>
+        <div class="actions">
+          <button class="btn primary" data-copy-text="docs/cases/generated/skill-startup-checklist.html">複製路徑</button>
+        </div>
+        <div class="path">docs/cases/generated/skill-startup-checklist.html</div>
+      </article>
+
+      <article class="card">
+        <div class="tag-row">
+          <span class="tag t-amber">Health</span>
+          <span class="tag t-green">System</span>
+        </div>
+        <h2 class="name">System Health Dashboard</h2>
+        <p class="desc">
+          系統健康檢查頁，偏 OpenClaw / host / security / cron 狀態總覽。適合做環境體檢與追蹤待補強項。
+        </p>
+        <div class="actions">
+          <button class="btn primary" data-copy-text="docs/cases/generated/system-health-dashboard-2026-04-03.html">複製路徑</button>
+        </div>
+        <div class="path">docs/cases/generated/system-health-dashboard-2026-04-03.html</div>
+      </article>
+
+      <article class="card">
+        <div class="tag-row">
+          <span class="tag t-purple">Data</span>
+          <span class="tag t-amber">JSON</span>
+        </div>
+        <h2 class="name">Dashboard Data</h2>
+        <p class="desc">
+          這不是主要給人看的頁面，而是 dashboard 用的資料層。之後若要重構總覽、接新卡片或自動更新，通常會從這份資料開始。
+        </p>
+        <div class="actions">
+          <button class="btn primary" data-copy-text="docs/cases/generated/dashboard-data.json">複製 JSON 路徑</button>
+          <button class="btn" data-copy-text="docs/cases/generated/dashboard-skill-inventory-snippet.html">複製 snippet 路徑</button>
+        </div>
+        <div class="path">docs/cases/generated/dashboard-data.json / dashboard-skill-inventory-snippet.html</div>
+      </article>
+    </section>
+
+    <div class="footer">
+      這頁是第一版總入口。之後若還有新 dashboard，應直接加進這裡，不要再散落成只能靠記憶找的檔案。<br/>
+      目前控制面對 `127.0.0.1` 子頁開啟不穩，所以這版先以「集中說明 + 路徑入口」為主，避免點了卻打不開。
+    </div>
+  </div>
+  <script>
+    document.querySelectorAll('[data-copy-text]').forEach((btn) => {
+      const status = document.createElement('div');
+      status.className = 'copy-status';
+      btn.parentElement.appendChild(status);
+      btn.addEventListener('click', async () => {
+        const text = btn.getAttribute('data-copy-text');
+        try {
+          await navigator.clipboard.writeText(text);
+          status.textContent = '已複製路徑';
+          const old = btn.textContent;
+          btn.textContent = '已複製';
+          setTimeout(() => {
+            btn.textContent = old;
+            status.textContent = '';
+          }, 1500);
+        } catch (e) {
+          status.textContent = '複製失敗，請手動複製';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

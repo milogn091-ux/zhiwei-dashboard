@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>System Health Dashboard — 2026-04-03</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(12, 22, 38, 0.90);
+      --line: rgba(148, 163, 184, 0.12);
+      --text: #edf4ff;
+      --muted: #9bb0cb;
+      --soft: #d4e0f2;
+      --blue: #7db2ff;
+      --green: #68ddb6;
+      --amber: #ffc97c;
+      --red: #ff8f8f;
+      --purple: #c3a3ff;
+      --shadow: 0 20px 60px rgba(0,0,0,.42);
+      --radius: 24px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(125,178,255,.15), transparent 26%),
+        radial-gradient(circle at top right, rgba(195,163,255,.10), transparent 22%),
+        linear-gradient(180deg, #07111f 0%, #0a1627 100%);
+      color: var(--text);
+    }
+    .wrap {
+      width: min(1520px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 18px 0 42px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .title {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 46px);
+      font-weight: 800;
+      line-height: 1.02;
+    }
+    .sub {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+    .chipbar { display:flex; flex-wrap:wrap; gap:8px; }
+    .chip {
+      padding: 9px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.04);
+      color: var(--soft);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .span-4 { grid-column: span 4; }
+    .span-6 { grid-column: span 6; }
+    .span-8 { grid-column: span 8; }
+    .span-12 { grid-column: span 12; }
+    .kicker {
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-weight: 800;
+    }
+    .big {
+      font-size: 34px;
+      font-weight: 800;
+      margin: 0 0 8px;
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .ok { background: rgba(104,221,182,.14); color: var(--green); }
+    .warn { background: rgba(255,201,124,.14); color: var(--amber); }
+    .risk { background: rgba(255,143,143,.14); color: var(--red); }
+    .info { background: rgba(125,178,255,.14); color: var(--blue); }
+    .muted { color: var(--muted); }
+    ul.clean {
+      margin: 12px 0 0;
+      padding-left: 18px;
+      color: var(--soft);
+      line-height: 1.55;
+    }
+    .score-grid {
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .score {
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(255,255,255,.03);
+    }
+    .score .label { color: var(--muted); font-size: 13px; }
+    .score .value { font-size: 28px; font-weight: 800; margin-top: 6px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    th, td {
+      text-align: left;
+      padding: 12px 10px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      vertical-align: top;
+    }
+    th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+    td { color: var(--soft); font-size: 14px; }
+    .pill {
+      display:inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(255,255,255,.06);
+      color: var(--soft);
+    }
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    @media (max-width: 1100px) {
+      .span-4, .span-6, .span-8 { grid-column: span 12; }
+      .score-grid { grid-template-columns: 1fr; }
+      .topbar { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <h1 class="title">System Health Dashboard</h1>
+        <div class="sub">2026-04-03｜知微整理版系統健康總覽（OpenClaw + 主機 + 定期任務）</div>
+      </div>
+      <div class="chipbar">
+        <div class="chip">OpenClaw 2026.4.1</div>
+        <div class="chip">Default model: gpt-5.4</div>
+        <div class="chip">Host: HSAI’s iMac</div>
+        <div class="chip">OS: macOS 13.7.8</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <section class="card span-4">
+        <div class="kicker">Overall</div>
+        <h2 class="big">B-</h2>
+        <div class="status warn">可用、穩定，但保護層偏薄</div>
+        <ul class="clean">
+          <li>OpenClaw 運作正常，Gateway / Telegram / Memory 皆正常。</li>
+          <li>預設模型已切回 OpenAI，Ollama 殘留已移除。</li>
+          <li>主要待補強在主機層：FileVault 與 Firewall。</li>
+        </ul>
+      </section>
+
+      <section class="card span-4">
+        <div class="kicker">OpenClaw Runtime</div>
+        <h2 class="big">A-</h2>
+        <div class="status ok">運行健康</div>
+        <ul class="clean">
+          <li>Gateway：local loopback，可達。</li>
+          <li>Telegram：正常。</li>
+          <li>cron 新執行 session 已恢復使用 gpt-5.4。</li>
+        </ul>
+      </section>
+
+      <section class="card span-4">
+        <div class="kicker">Host Security</div>
+        <h2 class="big">C</h2>
+        <div class="status risk">主機保護不足</div>
+        <ul class="clean">
+          <li>FileVault：<strong>Off</strong></li>
+          <li>macOS Firewall：<strong>Disabled</strong></li>
+          <li>使用者為 admin，影響面較大。</li>
+        </ul>
+      </section>
+
+      <section class="card span-8">
+        <div class="kicker">今日已完成修正</div>
+        <table>
+          <thead>
+            <tr>
+              <th>項目</th>
+              <th>結果</th>
+              <th>影響</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>default model 切回 OpenAI</td>
+              <td><span class="pill">完成</span></td>
+              <td>避免新 session / cron 再誤用 Ollama</td>
+            </tr>
+            <tr>
+              <td>移除所有 Ollama 模型</td>
+              <td><span class="pill">完成</span></td>
+              <td>config 改為 OpenAI-only 主路徑</td>
+            </tr>
+            <tr>
+              <td>移除 Ollama auth profile</td>
+              <td><span class="pill">完成</span></td>
+              <td>降低設定混亂與 provider 誤判</td>
+            </tr>
+            <tr>
+              <td>敏感 token 治理</td>
+              <td><span class="pill">完成</span></td>
+              <td>功能欄位改為 env 引用，減少明文裸露</td>
+            </tr>
+            <tr>
+              <td>清空無效 denyCommands</td>
+              <td><span class="pill">完成</span></td>
+              <td>移除假安全設定，audit warning 從 3 降到 2</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card span-4">
+        <div class="kicker">Security Audit</div>
+        <div class="score-grid">
+          <div class="score">
+            <div class="label">Critical</div>
+            <div class="value">0</div>
+          </div>
+          <div class="score">
+            <div class="label">Warnings</div>
+            <div class="value">2</div>
+          </div>
+        </div>
+        <ul class="clean">
+          <li>trustedProxies 未設定</li>
+          <li>multi-user heuristic warning</li>
+        </ul>
+      </section>
+
+      <section class="card span-6">
+        <div class="kicker">定期任務狀態</div>
+        <table>
+          <thead>
+            <tr>
+              <th>任務</th>
+              <th>頻率</th>
+              <th>現況</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>zhiwei:daily-backup</td>
+              <td>每日 03:15 (LA)</td>
+              <td><span class="pill">正常</span></td>
+            </tr>
+            <tr>
+              <td>daily learn one new skill</td>
+              <td>每日 12:00 (LA)</td>
+              <td><span class="pill">已脫離 Ollama 問題</span></td>
+            </tr>
+            <tr>
+              <td>daily fitness trend radar email</td>
+              <td>每日 08:05 (Taipei)</td>
+              <td><span class="pill">已脫離 Ollama 問題</span></td>
+            </tr>
+            <tr>
+              <td>weekly competitor product monitor</td>
+              <td>每週一 09:00 (Taipei)</td>
+              <td><span class="pill">正常</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card span-6">
+        <div class="kicker">主機檢查重點</div>
+        <ul class="clean">
+          <li>監聽 port 目前皆為 loopback only，外部暴露面小。</li>
+          <li>自動檢查更新已開。</li>
+          <li>Time Machine 目前僅能確認當下未執行，尚未證明備份策略健康。</li>
+          <li>使用者帳號為 <strong>admin</strong>，且具備 SSH / Screen Sharing / Remote AE 群組權限。</li>
+        </ul>
+      </section>
+
+      <section class="card span-12">
+        <div class="kicker">下一步優先序</div>
+        <table>
+          <thead>
+            <tr>
+              <th>優先級</th>
+              <th>項目</th>
+              <th>理由</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>高</td>
+              <td>啟用 FileVault</td>
+              <td>保護本機資料、token、記憶與工作內容的實體安全</td>
+            </tr>
+            <tr>
+              <td>高</td>
+              <td>開啟 macOS Firewall</td>
+              <td>補上主機層網路保護</td>
+            </tr>
+            <tr>
+              <td>中</td>
+              <td>確認是否需要 trustedProxies</td>
+              <td>若未經 reverse proxy 對外暴露，可維持現狀</td>
+            </tr>
+            <tr>
+              <td>中</td>
+              <td>重新設計多人 / 群組風險模型</td>
+              <td>若未來多人共用，需收緊 sandbox / fs / runtime 權限</td>
+            </tr>
+            <tr>
+              <td>低中</td>
+              <td>更新到 OpenClaw 2026.4.2</td>
+              <td>維持版本健康與修補最新問題</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="footer-note">
+          這份 dashboard 反映的是 2026-04-03 今日整理結果。若要做成可持續追蹤版，下一步可再加入「待修項狀態」、「cron 最近結果」與「風險變化追蹤」。
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

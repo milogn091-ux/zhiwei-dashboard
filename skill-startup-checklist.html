@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Skill Panel</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(12, 22, 38, 0.90);
+      --line: rgba(148, 163, 184, 0.11);
+      --text: #edf4ff;
+      --muted: #9bb0cb;
+      --soft: #d4e0f2;
+      --blue: #7db2ff;
+      --green: #68ddb6;
+      --purple: #c3a3ff;
+      --amber: #ffc97c;
+      --pink: #ff9dc0;
+      --shadow: 0 20px 60px rgba(0,0,0,.42);
+      --radius: 24px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft JhengHei", "PingFang TC", "Heiti TC", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(125,178,255,.15), transparent 26%),
+        radial-gradient(circle at top right, rgba(195,163,255,.10), transparent 22%),
+        linear-gradient(180deg, #07111f 0%, #0a1627 100%);
+      color: var(--text);
+    }
+    .wrap {
+      width: min(1580px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 18px 0 42px;
+    }
+    .topbar {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .title {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 46px);
+      font-weight: 800;
+      line-height: 1.02;
+    }
+    .sub {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+    .mini-chip {
+      padding: 9px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.04);
+      color: var(--soft);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 100%;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+    .t-blue { background: rgba(125,178,255,.14); color: var(--blue); }
+    .t-green { background: rgba(104,221,182,.14); color: var(--green); }
+    .t-purple { background: rgba(195,163,255,.14); color: var(--purple); }
+    .t-amber { background: rgba(255,201,124,.14); color: var(--amber); }
+    .t-pink { background: rgba(255,157,192,.14); color: var(--pink); }
+    .name {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.02;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+    .desc {
+      margin: 0;
+      color: var(--soft);
+      font-size: 18px;
+      line-height: 1.25;
+      font-weight: 600;
+    }
+    .subdesc {
+      margin: -4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .visual {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 10px;
+      border-radius: 18px;
+      border: 1px solid rgba(148,163,184,.10);
+      background: linear-gradient(135deg, rgba(15,23,42,.84), rgba(21,32,56,.70));
+    }
+    .node {
+      min-height: 42px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--soft);
+      font-size: 12px;
+      padding: 8px;
+    }
+    .center {
+      background: rgba(104,221,182,.10);
+      border-color: rgba(104,221,182,.20);
+      color: #e4fff3;
+      font-weight: 700;
+    }
+    .actions {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .btn {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      width: 100%;
+    }
+    .btn.primary {
+      background: rgba(125,178,255,.16);
+      border-color: rgba(125,178,255,.26);
+    }
+    .copy-status {
+      min-height: 18px;
+      color: var(--green);
+      font-size: 12px;
+      text-align: center;
+    }
+    details.more {
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(12, 22, 38, 0.68);
+      overflow: hidden;
+    }
+    details.more summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 14px 16px;
+      font-weight: 700;
+      color: var(--soft);
+    }
+    details.more summary::-webkit-details-marker { display: none; }
+    .more-body {
+      padding: 0 16px 16px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .inventory {
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(15,23,42,.70);
+      border: 1px solid rgba(148,163,184,.12);
+      color: #d7e6ff;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      word-break: break-word;
+    }
+    @media (max-width: 1280px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 780px) {
+      .grid { grid-template-columns: 1fr; }
+      .visual { grid-template-columns: 1fr; }
+      .topbar { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <h1 class="title">Skill Panel</h1>
+        <div class="sub">選一張卡，複製 prompt，直接用。</div>
+      </div>
+      <div class="mini-chip">查找 = 打開這頁</div>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="tag-row"><span class="tag t-green">主推薦</span><span class="tag t-blue">Focus</span></div>
+        <h2 class="name">focus</h2>
+        <p class="desc">進入專注模式</p>
+        <p class="subdesc">適合深度工作、降低分心、穩定推進。</p>
+        <div class="visual">
+          <div class="node">目標</div><div class="node center">Focus</div><div class="node">完成</div>
+          <div class="node">少分心</div><div class="node">推進</div><div class="node">收尾</div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" data-copy-text="進入專注模式，幫我用知微版 focus mode SOP 帶我開始這一段工作，先幫我定義目標、finish line，並幫我收斂範圍。">複製 Prompt</button>
+          <div class="copy-status"></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="tag-row"><span class="tag t-purple">整合型</span><span class="tag t-amber">API</span></div>
+        <h2 class="name">flowmind</h2>
+        <p class="desc">串任務與目標</p>
+        <p class="subdesc">適合把任務、筆記、focus 接成同一套系統。</p>
+        <div class="visual">
+          <div class="node">Goals</div><div class="node">Tasks</div><div class="node">Notes</div>
+          <div class="node center">FlowMind</div><div class="node">People</div><div class="node">Focus</div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" data-copy-text="幫我評估 flowmind 是否適合我現在的工作流程，並列出如果要接入，需要哪些設定、API key 與最佳使用場景。">複製 Prompt</button>
+          <div class="copy-status"></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="tag-row"><span class="tag t-blue">Discovery</span></div>
+        <h2 class="name">find</h2>
+        <p class="desc">找適合的 skill</p>
+        <p class="subdesc">適合不知道該裝哪個 skill 的時候。</p>
+        <div class="visual">
+          <div class="node">需求</div><div class="node">候選</div><div class="node">比較</div>
+          <div class="node center">Find</div><div class="node">審查</div><div class="node">選定</div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" data-copy-text="幫我找適合這件事的 skill，先做安全審查，再推薦最適合的候選。">複製 Prompt</button>
+          <div class="copy-status"></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="tag-row"><span class="tag t-green">Install</span></div>
+        <h2 class="name">install</h2>
+        <p class="desc">安裝一個 skill</p>
+        <p class="subdesc">適合你已知道目標 skill，直接要我裝。</p>
+        <div class="visual">
+          <div class="node">Search</div><div class="node">Resolve</div><div class="node">Install</div>
+          <div class="node center">Install</div><div class="node">Test</div><div class="node">Dashboard</div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" data-copy-text="幫我安裝這個 skill，確認風險、版本與可用性，安裝後再做一個最小示範，並同步更新 dashboard。">複製 Prompt</button>
+          <div class="copy-status"></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="tag-row"><span class="tag t-purple">Create</span></div>
+        <h2 class="name">create</h2>
+        <p class="desc">把流程做成 skill</p>
+        <p class="subdesc">適合把一次性做法固化成可重複能力。</p>
+        <div class="visual">
+          <div class="node">需求</div><div class="node">骨架</div><div class="node">資源</div>
+          <div class="node center">Create</div><div class="node">驗證</div><div class="node">封裝</div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" data-copy-text="幫我把這套流程整理成一個可重複使用的 skill，包含清楚觸發條件、SOP 與必要資源。">複製 Prompt</button>
+          <div class="copy-status"></div>
+        </div>
+      </article>
+
+
+      <article class="card">
+        <div class="tag-row"><span class="tag t-pink">Apple</span><span class="tag t-green">Reminders</span></div>
+        <h2 class="name">reminders</h2>
+        <p class="desc">管理 Apple 提醒事項</p>
+        <p class="subdesc">適合新增提醒、看 today、整理清單。</p>
+        <div class="visual">
+          <div class="node">Today</div><div class="node">Add</div><div class="node">Lists</div>
+          <div class="node center">Reminders</div><div class="node">Complete</div><div class="node">Upcoming</div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" data-copy-text="幫我用 Apple Reminders 處理這件事，如果需要先檢查 remindctl 權限與可用性，再幫我新增或整理提醒事項。">複製 Prompt</button>
+          <div class="copy-status"></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="tag-row"><span class="tag t-green">Search</span><span class="tag t-blue">17 Engines</span></div>
+        <h2 class="name">multi-search</h2>
+        <p class="desc">17 搜尋引擎整合</p>
+        <p class="subdesc">中國 8 個 + 國際 9 個，免 API key，支援 site: / filetype: / 時間過濾 / WolframAlpha。</p>
+        <div class="visual">
+          <div class="node">Baidu</div><div class="node">Google</div><div class="node">Bing</div>
+          <div class="node center">Multi Search</div><div class="node">DuckDuckGo</div><div class="node">WolframAlpha</div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" data-copy-text="幫我用 multi-search-engine 搜尋這個主題，選擇最適合的搜尋引擎（例如 Baidu / Google / WolframAlpha），並整理結果。">複製 Prompt</button>
+          <div class="copy-status"></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="tag-row"><span class="tag t-purple">Self-Improve</span><span class="tag t-blue">AI</span></div>
+        <h2 class="name">reflect</h2>
+        <p class="desc">Session 自我反思</p>
+        <p class="subdesc">分析近期對話、萃取可行洞察，自動寫入 AGENTS.md / TOOLS.md / memory。可設定定期 cron 執行。</p>
+        <div class="visual">
+          <div class="node">Sessions</div><div class="node">分析</div><div class="node">洞察</div>
+          <div class="node center">Reflect</div><div class="node">路由</div><div class="node">更新</div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" data-copy-text="幫我用 agent-self-reflection 分析最近的 sessions，找出具體可改進點，並把洞察寫入適當的 workspace 文件（AGENTS.md / TOOLS.md / memory）。">複製 Prompt</button>
+          <div class="copy-status"></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="tag-row"><span class="tag t-amber">Coding</span><span class="tag t-purple">Guild</span></div>
+        <h2 class="name">guild</h2>
+        <p class="desc">啟動 coding 團隊</p>
+        <p class="subdesc">適合功能開發、review、debug、交付。</p>
+        <div class="visual">
+          <div class="node">架構</div><div class="node">實作</div><div class="node">Review</div>
+          <div class="node center">Guild</div><div class="node">Debug</div><div class="node">Finish</div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" data-copy-text="用 dream-realization-guild 幫我處理這個開發任務，先判斷需要哪些角色，再依序完成規劃、實作、review、debug 與 finish。">複製 Prompt</button>
+          <div class="copy-status"></div>
+        </div>
+      </article>
+    </div>
+
+    <details class="more">
+      <summary>更多內容（點開）</summary>
+      <div class="more-body">
+        <p>完整 Skill Inventory、重要文件、快速叫法與 SOP 都放這裡，需要時再看。</p>
+        <div class="inventory">agent-self-reflection · ai-daily-briefing · competitive-analysis · find-skills-skill · flowmind · focus-deep-work · keyword-research · market-research · market-research-agent · mermaid-diagram · mind-map-skill · multi-search-engine · mupeng-trend-radar · openclaw-agent-browser · powerpoint-pptx · pptx-generator · proactive-agent · tavily-web-search-for-openclaw · trend-radar-lite · trend-watcher · vibe-coding-product-discovery · visual-report-lite · xiucheng-self-improving-agent</div>
+      </div>
+    </details>
+  </div>
+
+  <script>
+    document.querySelectorAll('[data-copy-text]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const text = btn.getAttribute('data-copy-text');
+        const status = btn.parentElement.querySelector('.copy-status');
+        try {
+          await navigator.clipboard.writeText(text);
+          if (status) status.textContent = '已複製，可直接貼回 OpenClaw 對話框。';
+          const old = btn.textContent;
+          btn.textContent = '已複製';
+          setTimeout(() => {
+            btn.textContent = old;
+            if (status) status.textContent = '';
+          }, 1800);
+        } catch (err) {
+          if (status) status.textContent = '複製失敗，請手動選取文字。';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
